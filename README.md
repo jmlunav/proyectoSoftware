@@ -29,12 +29,37 @@ Tambi√n se observ√≥que los clientes cuentan con los siguientes problemas:
 ### Men√∫ de Cliente
 ``` 
 Cliente: Hola
-Bot: Hola, Bienvenido a Metal Corp. Por favor, seleccione una opci√n:
+Bot: Hola, bienvenido a Metal Corp. Por favor, seleccione una opci√n:
 1. Informaci√n de la empresa
 2. Ver lista de productos
 3. Realizar una reserva
 4. Salir
 ```
 Si selecciona la opci√n 2:
-
+```
+Bot: (Mostrar productos)
+1. Aceros
+2. Azulejos
+3. Tuberias
+4. Aluminio
+5. Pinturas
+6. Buscar producto
+7. Atr√s
+```
+Si escoge la opcion 6:
+```
+Bot: Por favor, introduzca el nombre del producto o el c√digo
+Cliente: Pintura Monopol Rojo
+Bot: Disponemos de las siguientes opciones:
+1. Pintura Monopol Rojo 5l
+2. Pintura Monopol Rojo Premium
+3. Atr√s
+```
+Si selecciona la opci√n 1:
+```
+Bot: Pintura Monopol Rojo 5L
+     Precio: 80Bs.
+     Disponible en: Sucursal 2
+     Detalles: Pintura en agua, marca Monopol ideal para pintar paredes de cuartos o terminados en plancha fina. Cuenta con 5 litros.
+```
 
