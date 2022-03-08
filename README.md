@@ -26,7 +26,6 @@ También se puede observar que los clientes cuentan con los siguientes problemas
 * Contar con un servicio de reserva de productos.
 * Automatización en el proceso de consultas y reservas.
 * Mayor control del inventario.
-* 
 ### Intangible
 * Mejorar la imagen de la empresa.
 * Mejorar el proceso de ventas.
