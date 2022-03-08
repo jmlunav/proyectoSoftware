@@ -4,8 +4,8 @@ Universidad Católica Boliviana. <teddy.aruquipa@ucb.edu.bo>
 :product: BOT Empresa Metal Corp.
 
 ## Introducción
-El presento documente tendrá el detalle de todas las historías de usuario para la construcción de un BOT en la plataforma
-Telegram, el cual dispondra de diferentes funcionalidades, para asi apoyar a la venta de productos de la empresa Metal Corp.
+El presenté documento tendrá el detalle de todas las historías de usuario para la construcción de un BOT en la plataforma de
+Telegram, el cuál estara dirigido para la empresa Metal Corp.
 
 Se ha establecido que la funcionalidad mínima para la implementación será:
 
@@ -18,6 +18,8 @@ Para los clientes:
 Para el personal de la empresa:
 
  1. El personal de la empresa debe poder aprobar o negar las reservas de productos.
+ 2. El personal puede consultar un producto de otra sucursal diferente a la suya.
+ 3. El personal de la empresa podra añadir o eliminar productos.
 
 Para el Administrador de la empresa:
 
@@ -34,7 +36,7 @@ Para el Administrador de la empresa:
 *Prioridad*: ALTA
 
 #### Descripción
-Un `Cliente` debe solicitar la reserva de productos por medio de la aplicación, para esto debe especificar el o los productos que desea adquirir, asi como el horario en el que se recogera la mercaderia. Una vez enviada su solicitud el `Personal de Metal Corp.` procederá a aprobar o negar la solicitud de reserva del cliente, en caso de que la `Solicitud` sea negada se debe agregar un detalle del porque se nego dicha reserva. Además el `BOT` debe llevar un control de:
+Un `Cliente` debe solicitar la reserva de productos por medio de la aplicación, para esto debe especificar el o los productos que desea adquirir, asi como el horario en el que se recogerá la mercaderia. Una vez enviada su solicitud el `Personal de Metal Corp.` procederá a aprobar o negar la solicitud de reserva del cliente, en caso de que la `Solicitud` sea negada se debe agregar un detalle del porque se negó dicha reserva. Además el `BOT` debe llevar un control de:
  * El stock de los productos
  * El registro de reservas realizadas
  * El tiempo de duracion de la reserva
@@ -67,11 +69,31 @@ CANCELADO --> [*]
 ....
 
 #### Escenarios
-1. El producto no esta registrado en la aplicación.
-2. El producto esta registrado en la aplicación con stock suficiente.
-3. El producto esta registrado en la aplicación con stock insuficiente.
+1. El producto no está registrado en la aplicación.
+2. El producto está registrado en la aplicación con stock suficiente.
+3. El producto está registrado en la aplicación con stock insuficiente.
 4. Solicitud de reserva.
 5. Cancelación de reserva.
+
+#### Casos de Prueba
+
+*100.1.1 Validación de la cantidad*
+Descripción: Al momento de realizar la reserva de un producto, el bot pedirá una cantidad el cual debe ser ingresado por el cliente.
+
+En caso de que el `cliente ingrese una cantidad erronea` no se debe proceder a registrar el producto.
+
+Pasos:
+
+1. El `Cliente` envía el comando `/reservar (codigo)`
+- Datos: comando `/reservar ####`
+- Resultado: El BOT pregunta por la cantidad que requiere
+2. El `Cliente` ingresa el número 0.
+- Datos: Ingresa `0`
+- Resultado: El BOT indica que el número no puede ser 0 o negativo
+3. El `Cliente` coloca una cantidad mayor al stock.
+- Datos: Ingresa `Cantidad mayor al stock`
+- Resultado: El BOT le indica que la cantidad no puede superar al stock.
+
 
 ### 101 - Registro de producto en el sistema.
 
@@ -83,7 +105,7 @@ CANCELADO --> [*]
 
 #### Descripción
 
-El `Administrador de Metal Corp.` debe poder realizar el registro de nuevos productos en el sistema por medio del mismo BOT, al momento de solicitar su registro, el empleado deberá enviar la siguiente información:
+El `Administrador de Metal Corp.` debe poder realizar el registro de nuevos productos en el sistema por medio del mismo BOT, al momento de solicitar su registro, el Administrador deberá enviar la siguiente información:
 
  * Nombre del producto.
  * Categoría.
@@ -128,7 +150,7 @@ Pasos:
     - Resultado: El BOT pregunta por el nombre del producto
  2. El `Administrador` coloca un espacio en blanco
     - Datos: Coloca `un espacion en blanco`
-    - Resultado: El BOT pide nuevamente el nombre del producto porque no puede ser espacios en blanco.
+    - Resultado: El BOT pide nuevamente el nombre del producto porque no puede haber espacios en blanco.
  3. El `Administrador` coloca carácteres no convencionales como emojis.
     - Datos: Coloca `Pintura-Roja🎨`
     - Resultado: El BOT le indica que no puede colocar caracteres especiales.
