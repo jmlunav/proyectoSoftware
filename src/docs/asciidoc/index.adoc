@@ -1,0 +1,134 @@
+= {product} - Histórias de Usuario
+Universidad Católica Boliviana. <teddy.aruquipa@ucb.edu.bo>
+1.0.0
+:product: BOT Empresa Metal Corp.
+
+## Introducción
+El presento documente tendrá el detalle de todas las historías de usuario para la construcción de un BOT en la plataforma
+Telegram, el cual dispondra de diferentes funcionalidades, para asi apoyar a la venta de productos de la empresa Metal Corp.
+
+Se ha establecido que la funcionalidad mínima para la implementación será:
+
+Para los clientes:
+
+ 1. Los clientes pueden ver informacion de la empresa, como ser las sucursales disponibles.
+ 2. Los clientes pueden consultar los productos disponibles mediante el BOT.
+ 3. Los clientes pueden realizar una reserva de producto para recogerlo posteriormente.
+
+Para el personal de la empresa:
+
+ 1. El personal de la empresa debe poder aprobar o negar las reservas de productos.
+
+Para el Administrador de la empresa:
+
+ 1. El administrador de la empresa debe poder registrar y actualizar los productos.
+
+## Histórias de Usuario.
+
+### 100 - Solicitud de reserva de productos.
+
+*Autores*: Gutber Blanco - Teddy Aruquipa Peralta
+
+*Fecha*: 01/03/2022
+
+*Prioridad*: ALTA
+
+#### Descripción
+Un `Cliente` debe solicitar la reserva de productos por medio de la aplicación, para esto debe especificar el o los productos que desea adquirir, asi como el horario en el que se recogera la mercaderia. Una vez enviada su solicitud el `Personal de Metal Corp.` procederá a aprobar o negar la solicitud de reserva del cliente, en caso de que la `Solicitud` sea negada se debe agregar un detalle del porque se nego dicha reserva. Además el `BOT` debe llevar un control de:
+ * El stock de los productos
+ * El registro de reservas realizadas
+ * El tiempo de duracion de la reserva
+
+La solicitud pasará pos los siguientes estados:
+
+  * *SOLICITADO*: Cuando el cliente envía su solicitud de reserva al BOT y el BOT no la rechaza.
+  * *NO VÁLIDO*: Cuando el cliente envía su solicitud de reserva al BOT e ingresa una cantidad mayor al stock disponible del producto seleccionado.
+  * *APROBADO*: Solicitud de reserva aprobada por el personal de Metal Corp.
+  * *RECHAZADO*: Solicitud de reserva negadda por el personal de Metal Corp.
+  * *CANCELADA*: El cliente canceló una solicitud de reserva APROBADA
+
+El diagrama de estados para la `SOLICITUD` será:
+
+[plantuml, format="png", id="estados-solicitud"]
+....
+@startuml
+
+[*] --> SOLICITADO
+SOLICITADO --> NO_VALIDO
+NO_VALIDO --> [*]
+SOLICITADO -> APROBADO
+SOLICITADO -> RECHAZADO
+RECHAZADO --> [*]
+APROBADO -> CANCELADO
+APROBADO --> [*]
+CANCELADO --> [*]
+
+@enduml
+....
+
+#### Escenarios
+1. El producto no esta registrado en la aplicación.
+2. El producto esta registrado en la aplicación con stock suficiente.
+3. El producto esta registrado en la aplicación con stock insuficiente.
+4. Solicitud de reserva.
+5. Cancelación de reserva.
+
+### 101 - Registro de producto en el sistema.
+
+*Autores*: Gutber Blanco - Teddy Aruquipa Peralta
+
+*Fecha*: 03/03/2022
+
+*Prioridad*: ALTA
+
+#### Descripción
+
+El `Administrador de Metal Corp.` debe poder realizar el registro de nuevos productos en el sistema por medio del mismo BOT, al momento de solicitar su registro, el empleado deberá enviar la siguiente información:
+
+ * Nombre del producto.
+ * Categoría.
+ * Código.
+ * Foto del producto.
+ * Cantidad disponible.
+ * Dimensiones.
+ * Fabricante.
+ * Precio.
+
+Esta información sera guardada en la BBDD y se colocara al producto en estado `DISPONIBLE`.
+
+El diagrama de secuencias para la presente história es el siguiente:
+
+[plantuml, format="png", id="estados-solicitud"]
+....
+@startuml
+actor Administrador 
+
+Administrador -> BOT: Solicitar registro de producto en el sistema
+BOT -> Administrador: Notificación de registro de nuevo producto
+
+@enduml
+....
+
+#### Escenarios
+1. Registro CORRECTO.
+2. Registro INCORRECTO.
+3. Validación de datos ingresados por el administrador.
+
+#### Casos de Prueba
+
+*101.1.1 Validación de parámetros* 
+Descripción: Al momento de registrarse el nuevo producto, los siguientes campos son obligatorios: Nombre del producto, categoría,código, foto del producto, cantidad disponible, fabricante y precio.
+
+En caso de que el `Administrador no ingrese uno de estos valores` no se debe proceder a registrar el producto.
+
+Pasos:
+
+ 1. El `Administrador` envía el comando `/registrar`
+    - Datos: comando `/registrar`
+    - Resultado: El BOT pregunta por el nombre del producto
+ 2. El `Administrador` coloca un espacio en blanco
+    - Datos: Coloca `un espacion en blanco`
+    - Resultado: El BOT pide nuevamente el nombre del producto porque no puede ser espacios en blanco.
+ 3. El `Administrador` coloca carácteres no convencionales como emojis.
+    - Datos: Coloca `Pintura-Roja🎨`
+    - Resultado: El BOT le indica que no puede colocar caracteres especiales.
