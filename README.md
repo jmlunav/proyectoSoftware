@@ -1,41 +1,41 @@
 # Proyecto Ingenieria del Software
 
-## Introducciﾃn
-El presente proyecto estﾃ｡ dirigido al desarrollo de un bot en la plataforma Telegram, el cual dispondrﾃ｡de diferent funcionalidades, que tendrﾃ｡como objetivo apoyar en la venta de productos de la empresa Metal Corp.
+## Introducciﾃハ
+El presente proyecto estﾃδ｡ dirigido al desarrollo de un bot en la plataforma Telegram, el cual dispondrﾃδ｡de diferent funcionalidades, que tendrﾃδ｡como objetivo apoyar en la venta de productos de la empresa Lunvas.
 
-## Problemﾃ｡tica
-La empresa Metal Corp. dedicada a la venta de productos para la construcciﾃｳn, esﾃ expandiendo su negocio con la apertura de 2 sucursales nuevas, por lo cual observaron que cuentan con los siguientes problemas:
+## Problemﾃδ｡tica
+La empresa Lunvas dedicada a la venta de productos para la construccion para obra fina, esta expandiendo su negocio con la apertura de 2 sucursales nuevas, por lo cual observaron que cuentan con los siguientes problemas:
 
 * Debido a la alta cantidad de mensajes no pueden responder a todas las consultas.
 * Al contar con varios productos, se requiere de un sistema de inventarios.
 * No se puede realizar una reserva de un producto en linea.
 
-Tambiﾃn se observﾃｳque los clientes cuentan con los siguientes problemas:
+Tambiﾃハ se observﾃδｳque los clientes cuentan con los siguientes problemas:
 * Demora en la respuesta a sus consultas.
-* No saber en quﾃｩsucursal se encuentra su producto.
+* No saber en que sucursal se encuentra su producto.
 * No tener la posibilidad de hacer una reserva.
  
 ## Valor
 
 ### Tangible
 * Contar con un servicio de reserva de productos.
-* Automatizaciﾃn en el proceso de consultas y reservas.
+* Automatizaciﾃハ en el proceso de consultas y reservas.
 * Mayor control del inventario.
 ### Intangible
 * Mejorar la imagen de la empresa.
 * Mejorar el proceso de ventas.
 
 ## Ejemplo del funcionamiento del Bot
-### Menﾃｺ de Cliente
+### Menﾃδｺ de Cliente
 ``` 
 Cliente: Hola
-Bot: Hola, bienvenido a Metal Corp. Por favor, seleccione una opciﾃn:
-1. Informaciﾃn de la empresa
+Bot: Hola, bienvenido a Metal Corp. Por favor, seleccione una opciﾃハ:
+1. Informaciﾃハ de la empresa
 2. Ver lista de productos
 3. Realizar una reserva
 4. Salir
 ```
-Si selecciona la opciﾃn 2:
+Si selecciona la opciﾃハ 2:
 ```
 Bot: (Mostrar productos)
 1. Aceros
@@ -44,18 +44,18 @@ Bot: (Mostrar productos)
 4. Aluminio
 5. Pinturas
 6. Buscar producto
-7. Atrﾃs
+7. Atrﾃピ
 ```
 Si escoge la opcion 6:
 ```
-Bot: Por favor, introduzca el nombre del producto o el cﾃdigo
+Bot: Por favor, introduzca el nombre del producto o el cﾃヅigo
 Cliente: Pintura Monopol Rojo
 Bot: Disponemos de las siguientes opciones:
 1. Pintura Monopol Rojo 5l
 2. Pintura Monopol Rojo Premium
-3. Atrﾃs
+3. Atrﾃピ
 ```
-Si selecciona la opciﾃn 1:
+Si selecciona la opciﾃハ 1:
 ```
 Bot: Pintura Monopol Rojo 5L
      Precio: 80Bs.
