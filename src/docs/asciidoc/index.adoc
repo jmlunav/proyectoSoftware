@@ -5,13 +5,13 @@ Universidad Católica Boliviana. <teddy.aruquipa@ucb.edu.bo>
 
 ## Introducción
 El presenté documento tendrá el detalle de todas las historías de usuario para la construcción de un BOT en la plataforma de
-Telegram, el cuál estara dirigido para la empresa Metal Corp.
+Telegram, el cuál estará dirigido para la empresa Metal Corp.
 
 Se ha establecido que la funcionalidad mínima para la implementación será:
 
 Para los clientes:
 
- 1. Los clientes pueden ver informacion de la empresa, como ser las sucursales disponibles.
+ 1. Los clientes pueden ver información de la empresa, como ser las sucursales disponibles.
  2. Los clientes pueden consultar los productos disponibles mediante el BOT.
  3. Los clientes pueden realizar una reserva de producto para recogerlo posteriormente.
 
@@ -29,17 +29,17 @@ Para el Administrador de la empresa:
 
 ### 100 - Solicitud de reserva de productos.
 
-*Autores*: Gutber Blanco - Teddy Aruquipa Peralta
+*Autores*: Gutber Blanco Gomez
 
 *Fecha*: 01/03/2022
 
 *Prioridad*: ALTA
 
 #### Descripción
-Un `Cliente` debe solicitar la reserva de productos por medio de la aplicación, para esto debe especificar el o los productos que desea adquirir, asi como el horario en el que se recogerá la mercaderia. Una vez enviada su solicitud el `Personal de Metal Corp.` procederá a aprobar o negar la solicitud de reserva del cliente, en caso de que la `Solicitud` sea negada se debe agregar un detalle del porque se negó dicha reserva. Además el `BOT` debe llevar un control de:
+Un `Cliente` debe solicitar la reserva de productos por medio de la aplicación, para esto debe especificar el o los productos que desea adquirir, asi como el horario en el que se recogerá la mercaderia. Una vez enviada su solicitud el `Personal de Metal Corp.` procederá a aprobar o negar la solicitud de reserva del cliente, en caso de que la `Solicitud` sea negada se debe agregar un detalle del porqué se negó dicha reserva. Además el `BOT` debe llevar un control de:
  * El stock de los productos
  * El registro de reservas realizadas
- * El tiempo de duracion de la reserva
+ * El tiempo de duración de la reserva
 
 La solicitud pasará pos los siguientes estados:
 
@@ -97,7 +97,7 @@ Pasos:
 
 ### 101 - Registro de producto en el sistema.
 
-*Autores*: Gutber Blanco - Teddy Aruquipa Peralta
+*Autores*: Teddy Aruquipa Peralta
 
 *Fecha*: 03/03/2022
 
@@ -116,9 +116,9 @@ El `Administrador de Metal Corp.` debe poder realizar el registro de nuevos prod
  * Fabricante.
  * Precio.
 
-Esta información sera guardada en la BBDD y se colocara al producto en estado `DISPONIBLE`.
+Esta información será guardada en la BBDD y se colocará al producto en estado `DISPONIBLE`.
 
-El diagrama de secuencias para la presente história es el siguiente:
+El diagrama de secuencias para la presente historia es el siguiente:
 
 [plantuml, format="png", id="estados-solicitud"]
 ....
@@ -139,7 +139,7 @@ BOT -> Administrador: Notificación de registro de nuevo producto
 #### Casos de Prueba
 
 *101.1.1 Validación de parámetros* 
-Descripción: Al momento de registrarse el nuevo producto, los siguientes campos son obligatorios: Nombre del producto, categoría,código, foto del producto, cantidad disponible, fabricante y precio.
+Descripción: Al momento de registrarse el nuevo producto, los siguientes campos son obligatorios: Nombre del producto, categoría, código, foto del producto, cantidad disponible, fabricante y precio.
 
 En caso de que el `Administrador no ingrese uno de estos valores` no se debe proceder a registrar el producto.
 
