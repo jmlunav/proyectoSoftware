@@ -29,7 +29,7 @@ Para el Administrador de la empresa:
 
 ### 100 - Solicitud de reserva de productos.
 
-*Autores*: Gutber Blanco Gomez
+*Autor*: Gutber Blanco Gomez
 
 *Fecha*: 01/03/2022
 
@@ -97,7 +97,7 @@ Pasos:
 
 ### 101 - Registro de producto en el sistema.
 
-*Autores*: Teddy Aruquipa Peralta
+*Autor*: Teddy Aruquipa Peralta
 
 *Fecha*: 03/03/2022
 
