@@ -21,10 +21,12 @@ También se puede observar que los clientes cuentan con los siguientes problemas
 * No tener la posibilidad de hacer una reserva del producto deseado.
  
 ## Valor
+
 ### Tangible
 * Contar con un servicio de reserva de productos.
 * Automatización en el proceso de consultas y reservas.
 * Mayor control del inventario.
+* 
 ### Intangible
 * Mejorar la imagen de la empresa.
 * Mejorar el proceso de ventas.
