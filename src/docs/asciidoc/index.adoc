@@ -1,11 +1,11 @@
 = {product} - Histórias de Usuario
 Universidad Católica Boliviana. <teddy.aruquipa@ucb.edu.bo>
-1.0.0
-:product: BOT Empresa Metal Corp.
+1.0.1
+:product: BOT Empresa Lunvas.
 
 ## Introducción
 El presenté documento tendrá el detalle de todas las historías de usuario para la construcción de un BOT en la plataforma de
-Telegram, el cuál estará dirigido para la empresa Metal Corp.
+Telegram, el cuál estará dirigido para la empresa Lunvas.
 
 Se ha establecido que la funcionalidad mínima para la implementación será:
 
