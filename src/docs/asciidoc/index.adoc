@@ -36,17 +36,18 @@ Para el Administrador de la empresa:
 *Prioridad*: ALTA
 
 #### Descripción
-Un `Cliente` debe solicitar la reserva de productos por medio de la aplicación, para esto debe especificar el o los productos que desea adquirir, asi como el horario en el que se recogerá la mercaderia. Una vez enviada su solicitud el `Personal de Metal Corp.` procederá a aprobar o negar la solicitud de reserva del cliente, en caso de que la `Solicitud` sea negada se debe agregar un detalle del porqué se negó dicha reserva. Además el `BOT` debe llevar un control de:
+Un `Cliente` el cual está habilitado para reservas (Histórias de usuario No 090) debe solicitar la reserva de productos por medio del chatbot, para esto debe especificar el o los productos que desea adquirir, asi como el día en el que se recogerá la mercadería, el cual no podra exceder los 7 dias a partir de la solicitud. Una vez enviada la solicitud el `Personal de Metal Corp.` procederá a aprobar o negar la solicitud de reserva del cliente, en caso de que la `Solicitud` sea negada se debe agregar un detalle del porqué se negó dicha reserva. Caso contrario se le notificará al cliente que la solicitud fue aprobada. Además el `BOT` debe llevar un control de:
+
  * El stock de los productos
- * El registro de reservas realizadas
- * El tiempo de duración de la reserva
+ * El registro de reservas realizadas (La reserva solo se puede cancelar 48 horas antes de  la fecha de entrega)
+ * El tiempo de duración de la reserva (La reserva durara un máximo de 2 dias después de la fecha de entrega)
 
 La solicitud pasará pos los siguientes estados:
 
   * *SOLICITADO*: Cuando el cliente envía su solicitud de reserva al BOT y el BOT no la rechaza.
-  * *NO VÁLIDO*: Cuando el cliente envía su solicitud de reserva al BOT e ingresa una cantidad mayor al stock disponible del producto seleccionado.
+  * *NO VÁLIDO*: Cuando el cliente envía su solicitud de reserva al BOT e ingresa una cantidad mayor al stock disponible del producto seleccionado o menor a 1.
   * *APROBADO*: Solicitud de reserva aprobada por el personal de Metal Corp.
-  * *RECHAZADO*: Solicitud de reserva negadda por el personal de Metal Corp.
+  * *RECHAZADO*: Solicitud de reserva negada por el personal de Metal Corp.
   * *CANCELADA*: El cliente canceló una solicitud de reserva APROBADA
 
 El diagrama de estados para la `SOLICITUD` será:
@@ -69,30 +70,70 @@ CANCELADO --> [*]
 ....
 
 #### Escenarios
-1. El producto no está registrado en la aplicación.
-2. El producto está registrado en la aplicación con stock suficiente.
-3. El producto está registrado en la aplicación con stock insuficiente.
-4. Solicitud de reserva.
-5. Cancelación de reserva.
+1. El producto no está registrado en la Base de Datos.
+2. Validación de la cantidad.
+3. El cliente no esta habilitado para reservas.
+4. Seleccionar productos.
+5. El cliente solicita una reserva.
+6. El cliente cancela una reserva.
+7. El producto está registrado en la aplicación con stock insuficiente.
+8. El personal rechaza una solicitud de reserva.
+
 
 #### Casos de Prueba
+*100.1.1 El producto no se encuentra*
+Descripción: Al momento de realizar la reserva de un producto, el bot pedirá el nombre o código del producto.
 
-*100.1.1 Validación de la cantidad*
+En caso de que el `cliente ingrese mal el parametro o no exista el producto` no se debe proceder a reservar el producto.
+
+Pasos:
+
+1. El `Cliente` envía el comando `/reservar`
+- Datos: comando `/reservar`
+- Resultado: El BOT pide el nombre o código del producto
+2. El `Cliente` ingresa caracteres especiales.
+- Datos: Ingresa `Pintura Rojos 😀$`
+- Resultado: El BOT indica que no puede colocar caracteres especiales
+3. El `Cliente` ingresa un producto inexistente.
+- Datos: Ingresa `Llantas`
+- Resultado: El BOT le indica que el producto no existe en la tienda.
+
+*100.1.2 Validación de la cantidad*
 Descripción: Al momento de realizar la reserva de un producto, el bot pedirá una cantidad el cual debe ser ingresado por el cliente.
 
 En caso de que el `cliente ingrese una cantidad erronea` no se debe proceder a registrar el producto.
 
 Pasos:
 
-1. El `Cliente` envía el comando `/reservar (codigo)`
-- Datos: comando `/reservar ####`
-- Resultado: El BOT pregunta por la cantidad que requiere
+1. El `Cliente` envía el comando `/realizar_reserva`.
+- Datos: comando `/realizar_reserva`
+- Resultado: El BOT pregunta por la cantidad que requiere.
 2. El `Cliente` ingresa el número 0.
 - Datos: Ingresa `0`
 - Resultado: El BOT indica que el número no puede ser 0 o negativo
 3. El `Cliente` coloca una cantidad mayor al stock.
 - Datos: Ingresa `Cantidad mayor al stock`
 - Resultado: El BOT le indica que la cantidad no puede superar al stock.
+
+*100.1.3 El cliente no está habilitado para reservas*
+Descripción: Al momento de realizar la reserva de un producto, el bot verificará que el cliente este habilitado(Ver Historia 090) para realizar dicha reserva.
+
+En caso de que el `cliente no se encuentre habilitado` no se procederá a realizar la reserva.
+
+Pasos:
+
+1. El `Cliente` envía el comando `/reservar`
+- Datos: comando `/reservar`
+- Resultado: El BOT le notificará que su usuario no esta habilitado y le mandara pasos para su habilitación.
+
+*100.1.4 El cliente solicita una reserva*
+Descripción: Una vez terminado la etapa de selección de productos, el `Cliente` podrá confirmar la reserva y el bot enviará la solicitud.
+
+Pasos:
+
+1. El `Cliente` envía el comando `/confirmar_reserva`.
+- Datos: comando `/confirmar_reserva`
+- Resultado: El BOT le notifica que la solicitud fue enviada y que espere una respuesta en un tiempo predeterminado.
 
 
 ### 101 - Registro de producto en el sistema.
