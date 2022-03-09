@@ -92,3 +92,22 @@ Bot: Pintura Monopol Rojo 5L
  4. Otros
  5. Volver al menú Principal 
  ```
+ El cliente selecciona ahora la opción Nº 1
+
+ ```
+ Bot: Muy bien! Por favor Ingrese a que nombre irá la cotización
+ Cliente: José Luna
+ Bot: Perfecto! Tiene código de cliente preferente? 
+ 1. Sí 
+ 2. No
+ Cliente: 1
+ Bot: Super! Ingrese su codigo
+ Cliente: jmluna
+ Bot: Perfecto! aqui tiene su cotización con los descuentos correspondientes por ser cliente preferente.
+ COTIZACION.PDF
+ Bot: ¿Desea algo más?
+ 1. Sí
+ 2. No
+ Cliente: 2
+ Bot: Muchas gracias por la preferencia, que tenga una excelente jornada.  
+ ```
