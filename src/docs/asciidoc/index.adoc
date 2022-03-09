@@ -1,5 +1,6 @@
 = {product} - Histórias de Usuario
-Universidad Católica Boliviana. <teddy.aruquipa@ucb.edu.bo>
+Universidad Católica Boliviana "San Pablo". <teddy.aruquipa@ucb.edu.bo , jose.luna.v@ucb.edu.bo>
+
 1.0.1
 :product: BOT Empresa Lunvas.
 
