@@ -101,7 +101,7 @@ Pasos:
 *100.1.2 Validación de la cantidad*
 Descripción: Al momento de realizar la reserva de un producto, el bot pedirá una cantidad el cual debe ser ingresado por el cliente.
 
-En caso de que el `cliente ingrese una cantidad erronea` no se debe proceder a registrar el producto.
+En caso de que el `cliente ingrese una cantidad errónea` no se debe proceder a registrar el producto.
 
 Pasos:
 
@@ -113,7 +113,7 @@ Pasos:
 - Resultado: El BOT indica que el número no puede ser 0 o negativo
 3. El `Cliente` coloca una cantidad mayor al stock.
 - Datos: Ingresa `Cantidad mayor al stock`
-- Resultado: El BOT le indica que la cantidad no puede superar al stock.
+- Resultado: El BOT le indica que la cantidad no puede superar al stock y le muestra el stock.
 
 *100.1.3 El cliente no está habilitado para reservas*
 Descripción: Al momento de realizar la reserva de un producto, el bot verificará que el cliente este habilitado(Ver Historia 090) para realizar dicha reserva.
