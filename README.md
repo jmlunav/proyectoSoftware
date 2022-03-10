@@ -8,7 +8,7 @@ Integrantes del equipo:
 ## Introducción
 El presente proyecto está dirigido al desarrollo de un bot en la plataforma Telegram, el cual dispondrá de diferentes funcionalidades, que tendrá como objetivo apoyar en la venta de productos de la empresa Lunvas.
 ## Problemática
-La empresa Lunvas, cuya actividad principal es la venta de productos para construcción de obra fina, está expandiendo su negocio con la apertura de 2 sucursales nuevas, por lo cual observaron que cuentan con los siguientes problemas:
+La empresa Metal Corp, cuya actividad principal es la venta de productos para construcción de obra fina, está expandiendo su negocio con la apertura de 2 sucursales nuevas, por lo cual observaron que cuentan con los siguientes problemas:
 
 * Debido a la alta cantidad de mensajes no pueden responder a todas las consultas.
 * Al contar con varios productos, se requiere de un sistema de inventarios.
@@ -49,7 +49,7 @@ Bot: (Mostrar productos)
 4. Aluminio
 5. Pinturas
 6. Buscar producto
-7. AtrÃs
+7. Atrás
 ```
 Si escoge la opcion 6:
 ```
@@ -58,7 +58,7 @@ Cliente: Pintura Monopol Rojo
 Bot: Disponemos de las siguientes opciones:
 1. Pintura Monopol Rojo 5l
 2. Pintura Monopol Rojo Premium
-3. AtrÃs
+3. Atrás
 ```
 Si selecciona la opción 1:
 ```
@@ -67,4 +67,3 @@ Bot: Pintura Monopol Rojo 5L
      Disponible en: Sucursal 2
      Detalles: Pintura en agua, marca Monopol ideal para pintar paredes de cuartos o terminados en plancha fina. Cuenta con 5 litros.
 ```
-
