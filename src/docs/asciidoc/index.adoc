@@ -28,83 +28,6 @@ Para el Administrador de la empresa:
 
 ## Histórias de Usuario.
 
-
-### 089 - Solicitud de información de la empresa
-*Autor:* José Marcos Luna
-
-*Fecha:* 10/03/2022
-
-*Prioridad:* ALTA
-
-#### Descripción
-
-Un `cliente` desea saber la dirección exacta y horarios de atención de las sucursales. Por lo cual el cliente pregunta al `BOT` por la información de la empresa, entonces el BOT de forma amigable, le envía la dirección de las sucursales y los horarios de atención.
-
-* En caso de que la sucursal esté abierto, el BOT le indicará en cuánto tiempo va a cerrar.
-* En caso de que la sucursal esté cerrado, el BOT le indicará en cuanto tiempo abren las sucursales.
-
-La solicitud se hará por los siguientes estados:
-
-* *SOLICITADO*: Cuando el cliente envía su solicitud al BOT por los horarios de atención y el BOT envía su respuesta rápida.
-
-* *NO VÁLIDO*: Cuando el cliente envía al BOT algún emoji o caracter inadecuado.
-
-* *APROBADO*: Cuando el Cliente envía su solicitud y el BOT le indica si esta o no abierto y le indica el tiempo que cierra la sucursal
-
-El diagrama de estados será:
-
-[plantuml, format="png", id="estado-solicitud89"]
-....
-@startuml
-actor cliente
-cliente -> BOT: 1. Solicitar datos de las sucursales.
-cliente <- BOT: Enviar dirección de las sucursales
-cliente <- BOT: Enviar Horarios de atención.
-cliente <- BOT: Tiempo que falta para que cierre las sucursales
-@enduml
-....
-
-### 090 - Habilitación de clientes para realizar reservas
-*Autor:* José Marcos Luna
-
-*Fecha:* 10/03/2022
-
-*Prioridad:* ALTA
-
-#### Descripción
-
-Un `cliente frecuente` desea  realizar reservar de productos a traves del `BOT` para que pueda tener la facilidad de adquirir los productos que necesita, entonces hace una solicitud de registrarse para hacer reservas. El BOT tendrá que verificar si es un cliente frecuente o es un cliente relativamente nuevo.
-El BOT en base a los datos del cliente, Nombre, apellido, Carnet, veces en las que hizo su compra, podrá seleccionar si es o no un cliente apto para que pueda realizar reservas de prodcutos:
-
-* En caso que sea un cliente nuevo, entonces el BOT no le permitirá realizar reservas de productos.
-* En caso de que el cliente es frecuente, entonces tendrá la opción de registrarse para realizar reservas.
-
-La solicitud se hará por los siguientes estados:
-
-* *SOLICITADO*: En el momento que el cliente solicite registrarse para reservar productos.
-
-* *NO VÁLIDO*: Cuando el cliente nuevo solicite registrarse sin haber tenido un historial de compras
-
-* *APROBADO*: Cuando el cliente es frecuente y se registra satisfactoriamente y puede hacer sus reservas.
-* *RECHAZADO*: Cuando el cliente no cumple con los parámetros mínimos en su historial de compras.
-
-El diagrama de estados será:
-
-[plantuml, format="png", id="estado-solicitud90"]
-....
-@startuml
-actor cliente #blue
-
-cliente -> BOT: Solicitar reserva
-cliente <- BOT: Nombre, apellido, carnet
-cliente -> BOT: Enviar datos
-database historial
-BOT -> historial: datos del cliente
-historial -> BOT:Datos aprobados 
-cliente <- BOT: se registró sus datos
-@enduml
-....
-
 ### 100 - Solicitud de reserva de productos.
 
 *Autor*: Gutber Blanco Gomez
@@ -522,3 +445,79 @@ Pasos:
 5. El `Cliente` escribe el nombre del producto
 - Datos: Ingresa `/producto_nuevo_añadido`
 - Resultado: El BOT guarda el nuevo producto.
+
+### 089 - Solicitud de información de la empresa
+*Autor:* José Marcos Luna
+
+*Fecha:* 10/03/2022
+
+*Prioridad:* ALTA
+
+#### Descripción
+
+Un `cliente` desea saber la dirección exacta y horarios de atención de las sucursales. Por lo cual el cliente pregunta al `BOT` por la información de la empresa, entonces el BOT de forma amigable, le envía la dirección de las sucursales y los horarios de atención.
+
+* En caso de que la sucursal esté abierto, el BOT le indicará en cuánto tiempo va a cerrar.
+* En caso de que la sucursal esté cerrado, el BOT le indicará en cuanto tiempo abren las sucursales.
+
+La solicitud se hará por los siguientes estados:
+
+* *SOLICITADO*: Cuando el cliente envía su solicitud al BOT por los horarios de atención y el BOT envía su respuesta rápida.
+
+* *NO VÁLIDO*: Cuando el cliente envía al BOT algún emoji o caracter inadecuado.
+
+* *APROBADO*: Cuando el Cliente envía su solicitud y el BOT le indica si esta o no abierto y le indica el tiempo que cierra la sucursal
+
+El diagrama de estados será:
+
+[plantuml, format="png", id="estado-solicitud89"]
+....
+@startuml
+actor cliente
+cliente -> BOT: 1. Solicitar datos de las sucursales.
+cliente <- BOT: Enviar dirección de las sucursales
+cliente <- BOT: Enviar Horarios de atención.
+cliente <- BOT: Tiempo que falta para que cierre las sucursales
+@enduml
+....
+
+### 090 - Habilitación de clientes para realizar reservas
+*Autor:* José Marcos Luna
+
+*Fecha:* 10/03/2022
+
+*Prioridad:* ALTA
+
+#### Descripción
+
+Un `cliente frecuente` desea  realizar reservar de productos a traves del `BOT` para que pueda tener la facilidad de adquirir los productos que necesita, entonces hace una solicitud de registrarse para hacer reservas. El BOT tendrá que verificar si es un cliente frecuente o es un cliente relativamente nuevo.
+El BOT en base a los datos del cliente, Nombre, apellido, Carnet, veces en las que hizo su compra, podrá seleccionar si es o no un cliente apto para que pueda realizar reservas de prodcutos:
+
+* En caso que sea un cliente nuevo, entonces el BOT no le permitirá realizar reservas de productos.
+* En caso de que el cliente es frecuente, entonces tendrá la opción de registrarse para realizar reservas.
+
+La solicitud se hará por los siguientes estados:
+
+* *SOLICITADO*: En el momento que el cliente solicite registrarse para reservar productos.
+
+* *NO VÁLIDO*: Cuando el cliente nuevo solicite registrarse sin haber tenido un historial de compras
+
+* *APROBADO*: Cuando el cliente es frecuente y se registra satisfactoriamente y puede hacer sus reservas.
+* *RECHAZADO*: Cuando el cliente no cumple con los parámetros mínimos en su historial de compras.
+
+El diagrama de estados será:
+
+[plantuml, format="png", id="estado-solicitud90"]
+....
+@startuml
+actor cliente #blue
+
+cliente -> BOT: Solicitar reserva
+cliente <- BOT: Nombre, apellido, carnet
+cliente -> BOT: Enviar datos
+database historial
+BOT -> historial: datos del cliente
+historial -> BOT:Datos aprobados 
+cliente <- BOT: se registró sus datos
+@enduml
+....
