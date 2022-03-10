@@ -59,10 +59,9 @@ La solicitud se hará por los siguiente estados:
 
 El diagrama de estados será:
 
-[plantuml, format "png", id="estados-solicitud 1"]
+[plantuml, format="png", id="estados-solicitud 1"]
 ....
 @startuml
-
 [*] --> State1
 State1 --> [*]
 State1 : this is a string
