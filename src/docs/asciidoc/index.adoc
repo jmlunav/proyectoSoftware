@@ -4,7 +4,7 @@ Universidad Católica Boliviana San Pablo - Regional La Paz. <teddy.aruquipa@ucb
 :product: BOT Empresa Metal Corp.
 
 ## Introducción
-El presenté documento presenta el detalle de todas las historías de usuario necesarias para la construcción de un BOT en la plataforma de Telegram, el cuál estará dirigido para la empresa Metal Corp.
+El presenté documento presenta el detalle de todas las historías de usuario necesarias para la construcción de un BOT en la plataforma de Telegram, el cuál estará dirigido para la empresa Metal Corp, la cual tiene como principal actividad la venta de productos de construcción.
 
 Se ha establecido que la funcionalidad mínima para la implementación será la siguiente:
 
@@ -91,7 +91,7 @@ Pasos:
 - Datos: comando `/reservar`
 - Resultado: El BOT pide el nombre o código del producto
 2. El `Cliente` ingresa caracteres especiales.
-- Datos: Ingresa `Pintura Rojos 😀$`
+- Datos: Ingresa `Pintura Roja🎨 `
 - Resultado: El BOT indica que no puede colocar caracteres especiales
 3. El `Cliente` ingresa un producto inexistente.
 - Datos: Ingresa `Llantas`
@@ -113,6 +113,9 @@ Pasos:
 3. El `Cliente` coloca una cantidad mayor al stock.
 - Datos: Ingresa `Cantidad mayor al stock`
 - Resultado: El BOT le indica que la cantidad no puede superar al stock y le muestra el stock.
+4. El `Cliente` coloca una cantidad con decimales.
+- Datos: Ingresa `Cantidad con decimales`
+- Resultado: El BOT le indica que la cantidad no debe contener decimales, solo pueden ser numeros enteros.
 
 *100.1.3 El cliente no está habilitado para reservas*
 Descripción: Al momento de realizar la reserva de un producto, el bot verificará que el cliente este habilitado(Ver Historia 090) para realizar dicha reserva.
@@ -174,11 +177,28 @@ BOT -> Administrador: Notificación de registro de nuevo producto
 #### Escenarios
 1. Registro CORRECTO.
 2. Registro INCORRECTO.
-3. Validación de datos ingresados por el administrador.
+3. Validación de parametros ingresados por el administrador.
 
 #### Casos de Prueba
 
-*101.1.1 Validación de parámetros* 
+*101.1.1 Verificación de parametros*
+Descripción: Al momento de realizar el registro de un producto, el bot pedirá una cantidad de parametros, los cuales deben ser ingresados por el administrador.
+
+En caso de que el `administrador ingrese un dato en el formato erróneo o que omita un dato` no se debe proceder a registrar el producto.
+
+Pasos:
+
+1. El `Administrador` envía el comando `/registrar_producto`.
+- Datos: comando `/registrar_producto`
+- Resultado: El BOT verifica los parametros ingresados.
+2. El `Administrador` ingresa una letra en el PRECIO.
+- Datos: Ingresa `78a.50`
+- Resultado: El BOT indica que el precio no puede contener letras.
+3. El `Administrador` no coloca la imagen del producto.
+- Datos: Imagen, no ingresada
+- Resultado: El BOT le indica que es obligatorio ingresar una imagen de referencia del producto.
+
+*101.1.2 Validación de parámetros* 
 Descripción: Al momento de registrarse el nuevo producto, los siguientes campos son obligatorios: Nombre del producto, categoría, código, foto del producto, cantidad disponible, fabricante y precio.
 
 En caso de que el `Administrador no ingrese uno de estos valores` no se debe proceder a registrar el producto.
