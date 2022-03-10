@@ -6,9 +6,9 @@ Integrantes del equipo:
  3. José Marcos Luna Vasquez
 
 ## Introducción
-El presente proyecto está dirigido al desarrollo de un bot en la plataforma Telegram, el cual dispondrá de diferentes funcionalidades, que tendrá como objetivo apoyar en la venta de productos de la empresa Lunvas.
+El presente proyecto está dirigido al desarrollo de un bot en la plataforma Telegram, el cual dispondrá de diferentes funcionalidades, que tendrá como objetivo principal apoyar en la venta de productos de la empresa Metal Corp.
 ## Problemática
-La empresa Metal Corp, cuya actividad principal es la venta de productos para construcción de obra fina, está expandiendo su negocio con la apertura de 2 sucursales nuevas, por lo cual observaron que cuentan con los siguientes problemas:
+La empresa Metal Corp, cuya actividad principal es la venta de productos para construcción de obra fina, está expandiendo su negocio con la apertura de 2 nuevas sucursales, por lo cual observaron que cuentan con los siguientes problemas:
 
 * Debido a la alta cantidad de mensajes no pueden responder a todas las consultas.
 * Al contar con varios productos, se requiere de un sistema de inventarios.
@@ -29,7 +29,7 @@ También se puede observar que los clientes cuentan con los siguientes problemas
 ### Intangible
 * Mejorar la imagen de la empresa.
 * Mejorar el proceso de ventas.
-* Mejor atencion y experiencia al cliente.
+* Mejorar la atencion y proporcinarle una experiencia mucho mas satisfactoria al cliente.
 ## Ejemplo del funcionamiento del Bot
 ### Menú del Cliente
 ``` 

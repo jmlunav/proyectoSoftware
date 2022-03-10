@@ -1,18 +1,17 @@
 = {product} - Histórias de Usuario
-Universidad Católica Boliviana. <teddy.aruquipa@ucb.edu.bo>
+Universidad Católica Boliviana San Pablo - Regional La Paz. <teddy.aruquipa@ucb.edu.bo>
 1.0.0
 :product: BOT Empresa Metal Corp.
 
 ## Introducción
-El presenté documento tendrá el detalle de todas las historías de usuario para la construcción de un BOT en la plataforma de
-Telegram, el cuál estará dirigido para la empresa Metal Corp.
+El presenté documento presenta el detalle de todas las historías de usuario necesarias para la construcción de un BOT en la plataforma de Telegram, el cuál estará dirigido para la empresa Metal Corp.
 
-Se ha establecido que la funcionalidad mínima para la implementación será:
+Se ha establecido que la funcionalidad mínima para la implementación será la siguiente:
 
 Para los clientes:
 
- 1. Los clientes pueden ver información de la empresa, como ser las sucursales disponibles.
- 2. Los clientes pueden consultar los productos disponibles mediante el BOT.
+ 1. Los clientes pueden ver información de la empresa, como ser las sucursales disponibles, direcciones y horarios.
+ 2. Los clientes pueden consultar los productos disponibles mediante el BOT, asi como tambien la sucursal en la que se encuentran.
  3. Los clientes pueden realizar una reserva de producto para recogerlo posteriormente.
 
 Para el personal de la empresa:
