@@ -1,79 +1,33 @@
 = {product} - Histórias de Usuario
-Universidad Católica Boliviana "San Pablo". <teddy.aruquipa@ucb.edu.bo , jose.luna.v@ucb.edu.bo>
-
+Universidad Católica Boliviana. <teddy.aruquipa@ucb.edu.bo>
 1.0.0
-:product: BOT Asistente de Clientes para la Empresa Lunvas.
+:product: BOT Empresa Metal Corp.
 
 ## Introducción
-El presente documento tendrá el detalle de todas las historías de usuario para la construcción de un BOT Asistente a Clientes en la plataforma de Telegram, el cuál estará dirigido para la empresa Lunvas.
+El presenté documento tendrá el detalle de todas las historías de usuario para la construcción de un BOT en la plataforma de
+Telegram, el cuál estará dirigido para la empresa Metal Corp.
 
 Se ha establecido que la funcionalidad mínima para la implementación será:
 
 Para los clientes:
- 
- 1. Los clientes pueden solicitar la información de la empresa, como ser la dirección y los horarios de atención de cada sucursal mediante el BOT.
- 2. Los clientes pueden consultar los precios de los productos disponibles mediante el BOT.
- 3. Los clientes pueden recibir una cotización de cierto grupo de productos de uso específico en .PDF mediante el BOT.
- 4. Los clientes pueden realizar una reserva de producto para recogerlo posteriormente, con previo pago por transferencia bancaria del 50% del total mediante el BOT.
- 5. Los clientes pueden cancelar su pedido. (Máximo 4 veces por año) mediante el BOT.
- 6. Los clientes pueden recibir un mensaje de recordatorio sobre la reserva de su producto, dos veces al día mediante el BOT
- 7. Los clientes pueden recibir el día y la fecha en que caduca su reserva, indicándole que le resta 5 días para la caducación.
- 8. Los clientes pueden realizar pagos on line a través de pagos por códigos QR y/o transferencias bancarias.
 
-Para el personal operativo de la empresa:
+ 1. Los clientes pueden ver información de la empresa, como ser las sucursales disponibles.
+ 2. Los clientes pueden consultar los productos disponibles mediante el BOT.
+ 3. Los clientes pueden realizar una reserva de producto para recogerlo posteriormente.
 
- 1. El personal operativo puede recibir una notificación de confirmación de reserva del producto por parte del personal administrativo.
- 2. El personal oprativo puede consultar la existencia de un producto de otra sucursal diferente a la suya si existe la necesidad de hacer un traspaso de producto, mediante el BOT.
- 3. El personal operativo puede añadir la cantidad y dar de baja los productos con previa autorización, mediante el BOT
- 
-Para el personal administrativo de la empresa:
+Para el personal de la empresa:
 
- 1. El personal administrativo debe confirmar al cliente la reserva del producto verificando la transferencia bancaria realizada por el cliente.
- 2. El personal administrativo debe dar la autorización al personal operativo con una notificación para que reserve el producto solicitado por el cliente.
- 
+ 1. El personal de la empresa debe poder aprobar o negar las reservas de productos.
+ 2. El personal puede consultar un producto de otra sucursal diferente a la suya.
+ 3. El personal de la empresa podra añadir o eliminar productos.
+
+Para el Administrador de la empresa:
+
+ 1. El administrador de la empresa debe poder registrar y actualizar los productos.
 
 ## Histórias de Usuario.
-### 100 - Solicitud de información de la empresa
-*Autor:* José Marcos Luna
 
-*Fecha:* 10/03/2022
-
-*Prioridad:* ALTA
-
-#### Descripción
-
-Un `cliente` necesita saber la dirección exacta y horarios de atención de las sucursales. Por lo cual el cliente pregunta al `BOT` por la información de la empresa, entonces el BOT de forma amigable, le envía la dirección de las sucursales y los horarios de atención.
-
-* En caso de que siga abierto, el BOT le indicará en cuanto tiempo va a cerrar.
-
-* En caso que ya está cerrado, el BOT le indicará en cuanto tiempo abren las sucursales.
-
-La solicitud se hará por los siguiente estados:
-
-* *SOLICITADO*: Cuando el cliente envía su solicitud al BOT por los horarios de atención y el BOT envía su respuesta rápida.
-
-* *NO VÁLIDO*: Cuando el cliente envía una solicitud distinta a lo que el BOT sugiere.
-
-* *APROBADO*: Cuando el Cliente envia su solicitud y el BOT le indica si esta o no abierto y le indica el tiempo que cierra la sucursal
-* *RECHAZADO*: Cuando el cliente envía su solicitud y el BOT le indica que las sucursales estan cerradas y que abre en un determinado tiempo.
-
-El diagrama de estados será:
-
-[plantuml, format="png", id="estados-solicitud 1"]
-....
-@startuml
-[*] --> State1
-State1 --> [*]
-State1 : this is a string
-State1 : this is another string
-State1 -> State2
-State2 --> [*]
-
-@enduml
-....
-
-
-### 101 - Solicitud de reserva de productos.
+### 100 - Solicitud de reserva de productos.
 
 *Autor*: Gutber Blanco Gomez
 
