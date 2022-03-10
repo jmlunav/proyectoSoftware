@@ -30,12 +30,12 @@ Para el Administrador de la empresa:
 
 *Autor*: Gutber Blanco Gomez
 
-*Fecha*: 01/03/2022
+*Fecha*: 08/03/2022
 
 *Prioridad*: ALTA
 
 #### Descripción
-Un `Cliente` el cual está habilitado para reservas (Histórias de usuario No 090) debe solicitar la reserva de productos por medio del chatbot, para esto debe especificar el o los productos que desea adquirir, asi como el día en el que se recogerá la mercadería, el cual no podra exceder los 7 dias a partir de la solicitud. Una vez enviada la solicitud el `Personal de Metal Corp.` procederá a aprobar o negar la solicitud de reserva del cliente, en caso de que la `Solicitud` sea negada se debe agregar un detalle del porqué se negó dicha reserva. Caso contrario se le notificará al cliente que la solicitud fue aprobada. Además el `BOT` debe llevar un control de:
+Un `Cliente` el cual está habilitado para reservas (Histórias de usuario No 090) debe solicitar la reserva de productos por medio del chatbot, para esto debe especificar el o los productos que desea adquirir, asi como el día en el que se recogerá la mercadería, el cual no podrá exceder los 7 dias a partir de la solicitud. Una vez enviada la solicitud el `Personal de Metal Corp.` procederá a aprobar o negar la solicitud de reserva del cliente, en caso de que la `Solicitud` sea negada se debe agregar un detalle del porqué se negó dicha reserva. Caso contrario el `BOT` notificará al cliente que la solicitud fue aprobada. Además el `BOT` debe llevar un control de:
 
  * El stock de los productos
  * El registro de reservas realizadas (La reserva solo se puede cancelar 48 horas antes de  la fecha de entrega)
@@ -75,8 +75,8 @@ CANCELADO --> [*]
 4. Seleccionar productos.
 5. El cliente solicita una reserva.
 6. El cliente cancela una reserva.
-7. El producto está registrado en la aplicación con stock insuficiente.
-8. El personal rechaza una solicitud de reserva.
+7. El personal rechaza una solicitud de reserva.
+8. El personal acepta una solicitud de reserva.
 
 
 #### Casos de Prueba
@@ -117,6 +117,8 @@ Pasos:
 - Datos: Ingresa `Cantidad con decimales`
 - Resultado: El BOT le indica que la cantidad no debe contener decimales, solo pueden ser numeros enteros.
 
+
+
 *100.1.3 El cliente no está habilitado para reservas*
 Descripción: Al momento de realizar la reserva de un producto, el bot verificará que el cliente este habilitado(Ver Historia 090) para realizar dicha reserva.
 
@@ -128,14 +130,125 @@ Pasos:
 - Datos: comando `/reservar`
 - Resultado: El BOT le notificará que su usuario no esta habilitado y le mandara pasos para su habilitación.
 
-*100.1.4 El cliente solicita una reserva*
-Descripción: Una vez terminado la etapa de selección de productos, el `Cliente` podrá confirmar la reserva y el bot enviará la solicitud.
+*100.1.4 Selección de productos*
+Descripción: Para poder solicitar una reserva el `cliente` debera seleccionar primero sus productos mediante una búsqueda del producto (Ver historia 105).
+
+Pasos:
+
+1. El `Cliente` envía el comando `/reservar`.
+- Datos: comando `/reservar`
+- Resultado: El BOT pide el nombre o código del producto
+2. El `Cliente` ingresa `Aluminio 4mm`.
+- Datos: Ingresa `Aluminio 4mm`
+- Resultado: El BOT muestra una lista de productos coincidentes con la búsqueda y pide seleccionar una opción (Ver Ejemplo 100.1).
+3. El `Cliente` selecciona una opción.
+- Datos: El cliente selecciona una opción.
+- Resultado: El BOT le muestra los detalles del producto y pide confirmar la reserva
+4. El `Cliente` envía comando `/realizar_reserva`.
+- Datos: comando `/realizar_reserva`
+- Resultado: El Bot pregunta por la cantidad que requiere. (Ver Caso de prueba 100.1.2)
+
+
+*100.1.5 El cliente solicita una reserva*
+Descripción: Una vez terminado la etapa de selección de productos, el `Cliente` podrá confirmar la reserva y el bot le pedirá una fecha con formato dd-mm-aaaa y no superior a 7 dias a partir de la fecha actual. Si el `cliente` no sigue el formato no se debera proceder a reservar el producto, caso contrario se le notificara que la solicitud de reserva fue enviada.
 
 Pasos:
 
 1. El `Cliente` envía el comando `/confirmar_reserva`.
 - Datos: comando `/confirmar_reserva`
-- Resultado: El BOT le notifica que la solicitud fue enviada y que espere una respuesta en un tiempo predeterminado.
+- Resultado: El BOT pedirá que ingrese una fecha en el formato dd-mm-aaaa.
+2. El `Cliente` ingresa la fecha `05/06/2022`
+- Datos: Cliente ingresa `05/06/2022`
+- Resultado: El BOT le notifica que el formato es incorrecto.
+3. El `Cliente` ingresa una fecha fuera del rango.
+- Datos: Cliente ingresa fecha fuera del rango.
+- Resultado: El BOT le notificará que la fecha no puede superar los 7 dias.
+4: El `Cliente` ingresa `12-03-2022`.
+- Datos: Cliente ingresa `12-03-2022`
+- Resultado: El BOT le notifica que la solicitud fue enviada.
+
+*100.1.6 El cliente cancela una reserva*
+Descripción: Una vez aceptada una solicitud de reserva (Ver Caso de prueba ), el cliente podrá realizar la cancelación de la reserva siempre y cuando este dentro del tiempo permitido(día del pedido hasta 48 horas antes de la fecha de entrega), caso contrario el `Bot` le notificara que ya no puede cancelar la reserva.
+
+Pasos:
+
+1. El `Cliente` envía el comando `/cancelar_reserva`.
+- Datos: comando `/cancelar_reserva`
+- Resultado: Si está dentro del tiempo permitido el `Bot` le notificara que la reserva fue cancelada, caso contrario le notificara que no se puede realizar la cancelación.
+
+*100.1.7 El personal rechaza una solicitud de reserva*
+Descripción: Cuando un `cliente` envía una solicitud de reserva, el `Bot` enviara la solicitud al `personal` de la empresa, si el personal de la empresa decide rechazar la solicitud, se deberá explicar el motivo del rechazo de la solicitud, el cual ha de ser enviado al `Cliente`.
+
+Pasos:
+
+1. El `Personal` recibe una solicitud de reserva.
+2. El `Personal` ve la solicitud y envía el comando `/rechazar_reserva`.
+- Datos: comando `/rechazar_reserva`
+- Resultado: El BOT pedirá el motivo del rechazo de la solicitud.
+3. El `Personal` ingresa el motivo del rechazo de la solicitud.
+- Datos: `Personal` envía motivo del rechazo.
+- Resultado: El BOT recibe el motivo y lo envía al `Cliente` que hizo la reserva.
+
+*100.1.8 El personal acepta una solicitud de reserva*
+Descripción: Cuando un `cliente` envía una solicitud de reserva, el `Bot` enviara la solicitud al `personal` de la empresa, si el personal de la empresa decide aceptar la solicitud, el `BOT` debera enviar una notificación al `cliente` que realizo el pedido, además se debera enviar un recordatorio cada dia desde el dia en que se aceptó la solicitud hasta 2 dias después de la fecha de entrega.
+
+Pasos:
+
+1. El `Personal` recibe una solicitud de reserva.
+2. El `Personal` ve la solicitud y envía el comando `/aceptar_reserva`.
+- Datos: comando `/aceptar_reserva`
+- Resultado: El BOT notificara al usuario la aceptación de la reserva y se le enviara un recordatorio cada dia hasta 2 dias después de la fecha de entrega.
+
+#### Ejemplos.
+*Ejemplo 100.1:*
+```
+Cliente: /reservar
+Bot: Por favor ingrése el nombre o código del producto ha reservar
+Cliente: Aluminio 3mm
+Bot: Se encontraron los siguientes productos, por favor seleccione una opción:
+     1. Aluminio 3mm Rectangular
+     2. Aluminio 3mm Barra
+     3. Aluminio Reforzado 3mm
+     4. Buscar otro producto
+Cliente: 2
+Bot: Aluminio 3mm Barra
+     Unidad: Metro
+     Precio: 35Bs.
+     Cantidad disponible: 15
+     Detalle: Aluminio 3mm Barra, marca strato
+     Desea realizar la reserva?
+Cliente: /realizar_reserva
+Bot: Por favor, ingrese la cantidad a reservar:
+Cliente: 7
+Bot: Desea agregar otro producto?
+     1. Si
+     2. No
+Cliente: 2
+Bot: Aluminio 3mm Barra cant. 15
+     Desea confirmar la reserva?
+Cliente: /Confirmar_reserva
+Bot: Por favor, ingrese la fecha para el recojo del producto.
+     (Ingrese la fecha en el formato dd-mm-aaaa)
+Cliente: 12-03-2022
+Bot: La solicitud de reserva fue enviada, por favor espere un momento.
+(Ver Ejemplo 100.2)
+Bot: La solicitud de reserva fue aprobada.
+     No Reserva: 1420
+     Producto: Aluminio 3mm Barra (Cod: 1503)
+     Cantidad: 15
+     Fecha de entrega: 12-03-2022
+```
+*Ejemplo 100.2:*
+```
+Bot: Tiene una solitud de reserva.
+     No Reserva: 1420
+     Producto: Aluminio 3mm Barra (Cod: 1503)
+     Cantidad: 15
+     Fecha de entrega: 12-03-2022
+     Desea aceptar la reserva?
+Personal: /Aceptar_reserva
+Bot: Se le notificara al cliente el estado de la reserva.
+```
 
 
 ### 101 - Registro de producto en el sistema.
