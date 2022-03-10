@@ -10,6 +10,7 @@ El presente proyecto está dirigido al desarrollo de un bot en la plataforma Tel
 ## Problemática
 La empresa Lunvas, cuya actividad principal es la venta de productos para construcción de obra fina, está expandiendo su negocio con la apertura de 2 sucursales nuevas, por lo cual observaron que cuentan con los siguientes problemas:
 
+* El cliente desea conocer los horarios de atención de la empresa.
 * Debido a la alta cantidad de mensajes no pueden responder a todas las consultas que realiza el cliente.
 * Al contar con varios productos, se requiere de un sistema de inventarios.
 * No se puede realizar una reserva de un producto en línea. 
