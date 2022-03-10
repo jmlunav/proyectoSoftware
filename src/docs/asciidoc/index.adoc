@@ -13,6 +13,7 @@ Para los clientes:
  1. Los clientes pueden ver información de la empresa, como ser las sucursales disponibles, direcciones y horarios.
  2. Los clientes pueden consultar los productos disponibles mediante el BOT, asi como tambien la sucursal en la que se encuentran.
  3. Los clientes pueden realizar una reserva de producto para recogerlo posteriormente.
+ 4. Los clientes pueden recibir una cotización de cierto grupo de productos de uso específico en formato .PDF mediante el BOT.
 
 Para el personal de la empresa:
 
@@ -25,6 +26,42 @@ Para el Administrador de la empresa:
  1. El administrador de la empresa debe poder registrar y actualizar los productos.
 
 ## Histórias de Usuario.
+
+
+### 089 - Solicitud de información de la empresa
+*Autor:* José Marcos Luna
+
+*Fecha:* 10/03/2022
+
+*Prioridad:* ALTA
+
+#### Descripción
+
+Un `cliente` desea saber la dirección exacta y horarios de atención de las sucursales. Por lo cual el cliente pregunta al `BOT` por la información de la empresa, entonces el BOT de forma amigable, le envía la dirección de las sucursales y los horarios de atención.
+
+* En caso de que la sucursal esté abierto, el BOT le indicará en cuánto tiempo va a cerrar.
+* En caso de que la sucursal esté cerrado, el BOT le indicará en cuanto tiempo abren las sucursales.
+
+La solicitud se hará por los siguientes estados:
+
+* *SOLICITADO*: Cuando el cliente envía su solicitud al BOT por los horarios de atención y el BOT envía su respuesta rápida.
+
+* *NO VÁLIDO*: Cuando el cliente envía al BOT algún emoji o caracter inadecuado.
+
+* *APROBADO*: Cuando el Cliente envía su solicitud y el BOT le indica si esta o no abierto y le indica el tiempo que cierra la sucursal
+
+El diagrama de estados será:
+
+[plantuml, format="png", id="estado-solicitud89"]
+....
+@startuml
+actor cliente
+cliente -> BOT: 1. Solicitar datos de las sucursales.
+cliente <- BOT: Enviar dirección de las sucursales
+cliente <- BOT: Enviar Horarios de atención.
+cliente <- BOT: Tiempo que falta para que cierre las sucursales
+@enduml
+....
 
 ### 100 - Solicitud de reserva de productos.
 
@@ -310,3 +347,136 @@ Pasos:
 3. El `Administrador` no coloca la imagen del producto.
 - Datos: Imagen, no ingresada
 - Resultado: El BOT le indica que es obligatorio ingresar una imagen de referencia del producto.
+
+
+### 102 - Solicitud de cotización de productos.
+
+*Autor*: José Marcos Luna
+
+*Fecha*: 10/03/2022
+
+*Prioridad*: ALTA
+
+#### Descripción
+Un `Cliente` que se dedica a la carpintería de aluminio necesita la cotización de cierta cantidad de productos para la construcción de una obra que adquirió y debe presentarlo a una empresa para que lo tomen en cuenta y pueda trabajar con dicha empresa.
+Entonces el cliente envía una solicitud de cotización de productos al `BOT` y el BOT procede a responder con nuevas opciones para que el cliente elija uno de los distintos grupos de materiales de construcción disponibles. El cliente debe escoger la opción que necesita y el BOT pregunta al la cantidad de cada producto. El cliente tendrá opción de añadir otro porducto en particular que no esté en la lista.
+
+El BOT verificará que:
+
+* El cliente solo debe ingresar números mayores o iguales a 0.
+* El cliente tiene la opción ingresar números decimales.
+* El cliente no puede enviar emojis.
+* El cliente si necesita un color o varios de cierto producto lo podrá añadir ingresando una coma (,) para que pueda reconocer el BOT que se trata de un color o colores específicos
+* El dato completo del cliente (nombres, apellido, celular)
+
+La solicitud de cotización tiene los siguientes estados:
+
+* *SOLICITADO*: Cuando el cliente envía una solicitud de cotización de productos y el BOT confirma dicha solicitud.
+* *NO VÁLIDO*: Si el cliente envía emojis o números negativos al momento de ingresar la cantidad de productos que necesita.
+* *APROBADO*: Cuando el cliente llena los datos a detalle.
+* *RECHAZADO*: Será rechazado cuando el bot detecta que no se están ingresando adecuadamente la cantidad de los productos.
+* *CANCELADA*: El cliente se sale de la aplicación o si cancela su pedido
+
+El diagrama de estados para la `SOLICITUD` será:
+
+[plantuml, format="png", id="estados-solicitud102"]
+....
+@startuml
+actor cliente
+cliente -> BOT: Solicitar cotización
+cliente <- BOT: Envía opciones de los grupos de productos disponibles
+cliente -> BOT: Selecciona un grupo
+cliente <- BOT: Ingrese la cantidad,color
+cliente -> BOT: El cliente confirma su pedido
+cliente <- BOT: Envía la cotización en PDF
+@enduml
+....
+
+#### Escenarios
+1. El cliente ingresa datos no requeridos por el BOT.
+2. El cliente puede ingresar la cantidad de cada producto y el color.
+3. El cliente cancela su cotizacion.
+4. EL cliente puede añadir nuevos productos a su cotización
+
+#### Casos de Prueba
+*102.1.1 El cliente ingresa datos no requeridos*
+Descripción: Cuando el cliente ingresa emojis o varios puntos decimales.
+
+En caso de que el `cliente ingrese mal los datos` el bot debe indicar que no es permitido realizar dicha acción.
+
+Pasos:
+
+1. El `Cliente` envía el comando `/cotizar`
+- Datos: comando `/realizar_cotizacion`
+- Resultado: El BOT envía opciones de grupo de productos.
+2. El `Cliente` ingresa caracteres repetidos.
+- Datos: Ingresa `5..65 `
+- Resultado: El BOT indica que no puede colocar varias veces los puntos decimales
+3. El `Cliente` ingresa números negativos.
+- Datos: Ingresa `-52.32`
+- Resultado: El BOT le indica que no puede ingresar datos negativos.
+4. El `Cliente` ingresa letras.
+- Datos: Ingresa `doce`
+- Resultado: El BOT le indica que no puede ingresar letras.
+
+*102.1.2 El cliente puede ingresar la cantidad del producto y el color*
+Descripción: Al momento de realizar la cotización el cliente podrá ingresar la cantidad de producto y tambien el color de necesita.
+
+Pasos:
+
+1. El `Cliente` envía el comando `/cotizar`.
+- Datos: comando `/realizar_cotizacion`
+- Resultado: El BOT envía opciones de grupo de productos.
+2. El `Cliente` ingresa la opcion 1.
+- Datos: Ingresa `Grupo_de_herrajes_para_vidiro_templado_para_puerta_batiente`
+- Resultado: El BOT muestra la lista de dicho grupo y pregunta la cantidad y color para el producto Nº1
+3. El `Cliente` coloca una cantidad seguido con una coma (,) e ingresa el color.
+- Datos: Ingresa `Datos ingresados con éxtio`
+- Resultado: El BOT indica repite a preguntar la cantidad y el color.
+4. El `Cliente` finaliza el llenado de cotización
+- Datos: Ingresa `Datos guardados y se envía la cotización`
+- Resultado: El BOT le envia al cliente el documento.
+
+
+*102.1.3 El cliente cancela la cotización*
+Descripción: Cuando el cliente por alguna razón le informa al BOT con un comando que va a cancelar su cotización
+
+En caso de que el `cliente cancela la cotización` no se procederá a concluir la cotización.
+
+Pasos:
+
+1. El `Cliente` envía el comando `/cotizar`
+- Datos: comando `/realizar_cotizacion`
+- Resultado: El BOT envía opciones de grupo de productos.
+2. El `Cliente` ingresa la opcion 2.
+- Datos: Ingresa `Grupo_de_herrajes_para_vidiro_templado_para_puerta_corrediza`
+- Resultado: El BOT muestra la lista de dicho grupo y pregunta la cantidad y color para el producto Nº1
+3. El `Cliente` coloca una cantidad seguido con una coma (,) e ingresa el color.
+- Datos: Ingresa `Datos ingresados con éxito`
+- Resultado: El BOT indica repite a preguntar la cantidad y el color.
+4. El `Cliente` envía el comando `/cancelar`
+- Datos: Ingresa `/cancelar_cotizacion`
+- Resultado: El BOT borra todos los datos y se sale al menú principal.
+
+*102.1.4 El cliente puede añadir nuevo productos a la cotizacion*
+Descripción: Cuando el cliente necesita añadir un producto a su cotización
+
+En caso de que el `cliente cancela la cotización` no se procederá a concluir la cotización.
+
+Pasos:
+
+1. El `Cliente` envía el comando `/cotizar`
+- Datos: comando `/realizar_cotizacion`
+- Resultado: El BOT envía opciones de grupo de productos.
+2. El `Cliente` ingresa la opcion 3.
+- Datos: Ingresa `Grupo_accesorios_para_ventanas_Línea_20`
+- Resultado: El BOT muestra la lista de dicho grupo y pregunta la cantidad y color para el producto Nº1
+3. El `Cliente` coloca una cantidad seguido con una coma (,) e ingresa el color.
+- Datos: Ingresa `Datos ingresados con éxito`
+- Resultado: El BOT indica repite a preguntar la cantidad y el color.
+4. El `Cliente` envía el comando `/nuevo`
+- Datos: Ingresa `/nuevo_producto`
+- Resultado: El BOT le indica al cliente que escriba el nuevo producto.
+5. El `Cliente` escribe el nombre del producto
+- Datos: Ingresa `/producto_nuevo_añadido`
+- Resultado: El BOT guarda el nuevo producto.
