@@ -37,13 +37,13 @@ Para el Administrador de la empresa:
 
 #### Descripción
 
-Un `Cliente` desea  realizar por primera vez una reserva de productos a traves del `BOT`, por lo que realiza una solicitud de registro para hacer dicha reserva. Para ello el cliente ya debe haber realizado por lo menos 2 compras en las tiendas físicas, es asi que el BOT verficará si cumple con dicha condicion en base a los datos del cliente, como ser:
+Un `Cliente` desea  realizar por primera vez una reserva de productos a través del `BOT`, por lo que realiza una solicitud de registro para hacer dicha reserva. Para ello el cliente ya debe haber realizado por lo menos 2 compras en las tiendas físicas, es asi que el BOT verificará si cumple con dicha condición en base a los datos del cliente, como ser:
  
      * Nombre completo
      * NIT o Carnet
      * Cantidad de compras físicas.
 
-El BOT en base a dichos datos, podrá seleccionar si es o no un cliente hablitido para realizar reservas.
+El BOT en base a dichos datos, podrá seleccionar si es o no un cliente habilitado para realizar reservas.
 
 La solicitud se hará por los siguientes estados:
 
@@ -65,11 +65,11 @@ control "validador BOT" as CONTROL
 entity BOT
 database BaseBOT
 
-Cliente -> GUI : "/incio"
+Cliente -> GUI : "/inicio"
 GUI -> Cliente : "opciones"
 Cliente -> GUI : "/registroCliente"
 GUI -> CONTROL : "Solicitud de registro de cliente"
-CONTROL -> BOT : "verificar habilitacón cliente" 
+CONTROL -> BOT : "verificar habilitación cliente"
 BOT -> CONTROL: "Solicitar NIT o Carnet"
 CONTROL -> GUI: "Solicitar DATOS"
 Cliente -> GUI: "DATOS"
@@ -88,6 +88,10 @@ Cliente -> GUI: "DATOS"
 GUI ->CONTROL : "DATOS INGRESADOS"
 CONTROL -> BOT: "DATOS VALIDADOS"
 BOT -> BaseBOT: "ALMACENAR DATOS CLIENTE"
+BaseBOT -> BOT: "Resultado"
+BOT -> CONTROL: "Resultado"
+CONTROL -> GUI: "Enviar resultado"
+GUI -> Cliente: "Mostrar resultado"
 @enduml
 ....
 
@@ -96,12 +100,12 @@ BOT -> BaseBOT: "ALMACENAR DATOS CLIENTE"
 1. Cliente NO habilitado
 2. Cliente habilitado y registro CORRECTO.
 3. El cliente habilitado cancela el registro.
-4. Validación de parametros ingresados.
+4. Validación de parámetros ingresados.
 
 #### Casos de Prueba
 
 *90.1.1 Cliente No habilitado*
-Descripción: Al momento de querer proceder con el registro de un cliente para realizar reservas , el bot pedirá el NIT o carnet del cliente para verificar si cumple con los requisitos para registrarse, en caso de estar habilitado se le pedirá una cantidad de parametros obligatorios: Nombre completo, dirección, teléfono y correo.
+Descripción: Al momento de querer proceder con el registro de un cliente para realizar reservas, el bot pedirá el NIT o carnet del cliente para verificar si cumple con los requisitos para registrarse, en caso de estar habilitado se le pedirá una cantidad de parámetros obligatorios: Nombre completo, dirección, teléfono y correo.
 
 En caso de que el cliente no cumpla con el requisito previo, no se debe proceder a registrar al cliente para reservas.
 
@@ -112,12 +116,12 @@ Pasos:
 - Resultado: El BOT retorna un mensaje "Ingrese NIT o carnet".
 2. El `Cliente` ingresa su NIT o carnet.
 - Datos: Ingresa `6864680`
-- Resultado: El BOT retorna un mensaje "No se encuentra habilitado para registrarse, desea realizar otra accion? si/no".
+- Resultado: El BOT retorna un mensaje "No se encuentra habilitado para registrarse, desea realizar otra acción? si/no".
 3. El `Cliente` envia `/no`.
-- Datos: Envia no.
+- Datos: Envía no.
 - Resultado: El BOT le muestra el menú de inicio.
 
-*90.2.1 Registro correcto de nuevo producto* 
+*90.2.1 Registro correcto de nuevo cliente*
 
 Descripción: Al momento de querer proceder con el registro de un cliente para realizar reservas , habiendo el BOT ya verificado su habilitación, se le pedirá una cantidad de parametros obligatorios: Nombre completo, dirección, teléfono y correo.
 
@@ -125,7 +129,7 @@ Pasos:
 
  1. Ingresar al BOT via Telegram y enviar el comando `/inicio`
  - Datos: NINGUNO
- - Resultado esperado: El BOT retorna un mensaje. "Que desea realizar?:
+ - Resultado esperado: El BOT retorna un mensaje. "Qué desea realizar?:
 
     1) Ver información de la empresa.
     2) Ver lista de productos.
@@ -156,8 +160,8 @@ Pasos:
  - Datos: ingresa su `coreeo electrónico`
  - Resultado esperado: El BOT retorna un mensaje. "Registro completado"
  
-*90.1.1 Cliente habilitado cancela el registro*
-Descripción: Al momento de querer proceder con el registro de un cliente para realizar reservas , el bot pedirá el NIT o carnet del cliente para verificar si cumple con los requisitos para registrarse, en caso de estar habilitado se le pedirá una cantidad de parametros obligatorios: Nombre completo, dirección, teléfono y correo. Una vez verificada su habilitación el cliente puede cancelar el registro si asi lo desea.
+*90.3.1 Cliente habilitado cancela el registro*
+Descripción: Al momento de querer proceder con el registro de un cliente para realizar reservas , el bot pedirá el NIT o carnet del cliente para verificar si cumple con los requisitos para registrarse, en caso de estar habilitado se le pedirá una cantidad de parámetros obligatorios: Nombre completo, dirección, teléfono y correo. Una vez verificada su habilitación el cliente puede cancelar el registro si asi lo desea.
 
 Pasos:
 
@@ -167,26 +171,10 @@ Pasos:
 2. El `Cliente` ingresa su NIT o carnet.
 - Datos: Ingresa `6864680`
 - Resultado: El BOT retorna un mensaje "Usted se encuentra habilitado para registrarse, desea continuar? si/no".
-3. El `Cliente` envia `/no`.
-- Datos: Envia no.
+3. El `Cliente` envía `/no`.
+- Datos: Envía no.
 - Resultado: El BOT le muestra el menú de inicio.
 
-*90.4.1 Verificación y Validación de parametros*
-Descripción: Al momento de realizar el registro de un producto, el bot pedirá una cantidad de parametros obligatorios: Nombre del producto, categoría, código, foto del producto, cantidad disponible, fabricante y precio.  los cuales deben ser ingresados por el administrador.
-
-En caso de que el `administrador ingrese un dato en el formato erróneo o que omita un dato` no se debe proceder a registrar el producto.
-
-Pasos:
-
-1. El `Administrador` envía el comando `/registrar_producto`.
-- Datos: comando `/registrar_producto`
-- Resultado: El BOT verifica los parametros ingresados.
-2. El `Administrador` ingresa una letra en el PRECIO.
-- Datos: Ingresa `78a.50`
-- Resultado: El BOT indica que el precio no puede contener letras.
-3. El `Administrador` no coloca la imagen del producto.
-- Datos: Imagen, no ingresada
-- Resultado: El BOT le indica que es obligatorio ingresar una imagen de referencia del producto.
 
 ### 100 - Solicitud de reserva de productos.
 
@@ -245,7 +233,7 @@ CANCELADO --> [*]
 *100.1.1 El producto no se encuentra*
 Descripción: Al momento de realizar la reserva de un producto, el bot pedirá el nombre o código del producto.
 
-En caso de que el `cliente ingrese mal el parametro o no exista el producto` no se debe proceder a reservar el producto.
+En caso de que el `cliente ingrese mal el parámetro o no exista el producto` no se debe proceder a reservar el producto.
 
 Pasos:
 
@@ -590,7 +578,7 @@ Pasos:
 
 #### Descripción
 Un `Cliente` que se dedica a la carpintería de aluminio necesita la cotización de cierta cantidad de productos para la construcción de una obra que adquirió y debe presentarlo a una empresa para que lo tomen en cuenta y pueda trabajar con dicha empresa.
-Entonces el cliente envía una solicitud de cotización de productos al `BOT` y el BOT procede a responder con nuevas opciones para que el cliente elija uno de los distintos grupos de materiales de construcción disponibles. El cliente debe escoger la opción que necesita y el BOT pregunta al la cantidad de cada producto. El cliente tendrá opción de añadir otro porducto en particular que no esté en la lista.
+Entonces el cliente envía una solicitud de cotización de productos al `BOT` y el BOT procede a responder con nuevas opciones para que el cliente elija uno de los distintos grupos de materiales de construcción disponibles. El cliente debe escoger la opción que necesita y el BOT pregunta al la cantidad de cada producto. El cliente tendrá opción de añadir otro producto en particular que no esté en la lista.
 
 El BOT verificará que:
 
