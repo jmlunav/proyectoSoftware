@@ -29,6 +29,7 @@
 			<scope>runtime</scope>
 		</dependency>
 
+
 		<!-- Liberias para genera la documentacion del proyecto con ASCIIDOCTOR -->
 		<dependency>
 			<groupId>org.asciidoctor</groupId>
@@ -46,6 +47,21 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.telegram</groupId>
+			<artifactId>telegrambots</artifactId>
+			<version>5.7.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mybatis.spring.boot</groupId>
+			<artifactId>mybatis-spring-boot-starter</artifactId>
+			<version>2.2.2</version>
 		</dependency>
 	</dependencies>
 
