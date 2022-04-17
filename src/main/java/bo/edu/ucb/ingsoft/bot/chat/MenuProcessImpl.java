@@ -47,7 +47,7 @@ public class MenuProcessImpl extends AbstractProcess {
                 try {
                     int opcion = Integer.parseInt(text);
                     switch (opcion){
-                        case 1 : result = new QueryPastRequestsProcessImpl();
+                        case 1 : result = new ReserveProcessImpl();
                         break;
                         case 2 : result = new RequestsPermissionProcessImpl();
                         break;
@@ -66,8 +66,8 @@ public class MenuProcessImpl extends AbstractProcess {
 
     private void showMainMenu(HhRrLongPollingBot bot, Long chatId) {
         StringBuffer sb = new StringBuffer();
-        sb.append("MENU PRINCIPAL - BOT RRHH222\r\n");
-        sb.append("1. Consultar permisos solicitados\r\n");
+        sb.append("MENU PRINCIPAL - BOT Metal Corp\r\n");
+        sb.append("1. Realizar reserva de productos\r\n");
         sb.append("2. Solicitar vacación\r\n");
         sb.append("Elija una opción:\r\n");
         sendStringBuffer(bot, chatId, sb);
