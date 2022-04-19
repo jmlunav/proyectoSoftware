@@ -37,11 +37,13 @@
 			<version>1.6.2</version>
 		</dependency>
 
+		<!-- dependencias para Telegram -->
 		<dependency>
 			<groupId>org.telegram</groupId>
 			<artifactId>telegrambots</artifactId>
 			<version>5.7.1</version>
 		</dependency>
+
 		<!-- Depedencias para la Base de DAtos -->
 		<dependency>
 			<groupId>org.mybatis.spring.boot</groupId>

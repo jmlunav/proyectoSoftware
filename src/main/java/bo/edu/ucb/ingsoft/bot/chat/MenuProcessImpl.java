@@ -64,11 +64,11 @@ public class MenuProcessImpl extends AbstractProcess {
         return result;
     }
 
-    private void showMainMenu(HhRrLongPollingBot bot, Long chatId) {
+    public void showMainMenu(HhRrLongPollingBot bot, Long chatId) {
         StringBuffer sb = new StringBuffer();
         sb.append("MENU PRINCIPAL - BOT Metal Corp\r\n");
         sb.append("1. Realizar reserva de productos\r\n");
-        sb.append("2. Solicitar vacación\r\n");
+        sb.append("2. Registrar usuario\r\n");
         sb.append("Elija una opción:\r\n");
         sendStringBuffer(bot, chatId, sb);
 

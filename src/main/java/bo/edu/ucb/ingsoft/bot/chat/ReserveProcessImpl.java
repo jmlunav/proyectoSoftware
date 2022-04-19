@@ -50,7 +50,8 @@ public class ReserveProcessImpl extends AbstractProcess{
                         try {
                             int lot = Integer.parseInt(text);
                             addlotProduct(bot, chatId, lot);
-                            showReserveMenu(bot, chatId);
+                            //temporalmente
+                            //showReserveMenu(bot, chatId);
                         }catch (Exception e){
                             System.out.println(e);
                         }

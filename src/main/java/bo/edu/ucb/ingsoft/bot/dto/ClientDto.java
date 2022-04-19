@@ -1,9 +1,9 @@
 package bo.edu.ucb.ingsoft.bot.dto;
 
 public class ClientDto {
-    private String name;
-    private String surname;
-    private String ci;
+    private String name; //nombre
+    private String surname; //apellido
+    private String ci; //carnet
     private String reserve_status;
 
     public ClientDto(String name, String surname, String ci, String reserve_status) {

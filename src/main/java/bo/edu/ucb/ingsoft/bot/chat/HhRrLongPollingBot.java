@@ -28,6 +28,7 @@ public class HhRrLongPollingBot extends TelegramLongPollingBot {
         usersSession = new HashMap<>();
     }
 
+    /*ingresamos el nombre de usuario del bot Prueba_40_bot*/
     @Override
     public String getBotUsername() {
         return "Prueba_40_bot";
