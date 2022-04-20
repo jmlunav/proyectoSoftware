@@ -6,6 +6,7 @@ import bo.edu.ucb.ingsoft.bot.bl.ProductBl;
 import bo.edu.ucb.ingsoft.bot.dto.ClientDto;
 import bo.edu.ucb.ingsoft.bot.dto.PermissionDto;
 import bo.edu.ucb.ingsoft.bot.dto.ProductDto;
+import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
@@ -24,6 +25,7 @@ public class ReserveProcessImpl extends AbstractProcess{
         this.setStartDate(System.currentTimeMillis()/1000);
         //this.setUserData(new HashMap<>());
         this.setStatus("STARTED");
+
     }
     @Override
     public AbstractProcess handle(Update update, HhRrLongPollingBot bot) {
@@ -111,7 +113,18 @@ public class ReserveProcessImpl extends AbstractProcess{
         sb.append("5. Cancelar\r\n");
         sb.append("Elija una opción:\r\n");
 
-        sendStringBuffer(bot, chatId, sb);
+        /*sendStringBuffer(bot, chatId, sb);
+        SendMessage sendMessage = new SendMessage();
+        sendMessage.setChatId(chatId.toString());
+        sendMessage.setText("<b>bold</b>");
+        sendMessage.setParseMode("HTML");
+        try {
+            bot.sendMyMessage(sendMessage);
+        }catch (Exception e){
+
+        }*/
+
+
         this.setStatus("AWAITING_USER_RESPONSE");
     }
 
@@ -158,6 +171,7 @@ public class ReserveProcessImpl extends AbstractProcess{
         StringBuffer sb = new StringBuffer();
         sb.append("Producto añadido al carrito\r\n");
         sendStringBuffer(bot, chatId, sb);
+        showReserveMenu(bot, chatId);
         this.setStatus("AWAITING_USER_RESPONSE");
     }
     private void deleteproductmessage(HhRrLongPollingBot bot, Long chatId){
