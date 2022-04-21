@@ -70,6 +70,7 @@ public class ReserveProcessImpl extends AbstractProcess{
                     }
                     else {
                         int opcion = Integer.parseInt(text);
+
                         switch (opcion){
                             case 1 :
                                 addProductmessage(bot, chatId);
@@ -124,7 +125,7 @@ public class ReserveProcessImpl extends AbstractProcess{
         }catch (Exception e){
 
         }*/
-
+        sendStringBuffer(bot, chatId, sb);
 
         this.setStatus("AWAITING_USER_RESPONSE");
     }
