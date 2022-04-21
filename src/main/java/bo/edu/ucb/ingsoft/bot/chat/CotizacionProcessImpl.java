@@ -2,26 +2,15 @@ package bo.edu.ucb.ingsoft.bot.chat;
 
 import bo.edu.ucb.ingsoft.bot.bl.ProductBl;
 import bo.edu.ucb.ingsoft.bot.dto.ProductDto;
-import com.itextpdf.io.image.ImageDataFactory;
-import com.itextpdf.kernel.pdf.PdfDocument;
-import com.itextpdf.kernel.pdf.PdfWriter;
-import com.itextpdf.layout.Document;
-import com.itextpdf.layout.element.Image;
-import com.itextpdf.layout.element.Paragraph;
-import org.springframework.boot.web.servlet.server.Session;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
 public class CotizacionProcessImpl extends AbstractProcess{
 
-    private int statereserve = 0;
+    private int state = 0;
     private List<ProductDto> ProductosSolicitados = new ArrayList<>();
 
     public CotizacionProcessImpl(){
@@ -46,16 +35,15 @@ public class CotizacionProcessImpl extends AbstractProcess{
             // Estamos esperando por un numero 1 o 2
             Message message = update.getMessage();
             if ( message.hasText() ) {
-                // Intentamos transformar en número
 
-                String text = message.getText(); // El texto contiene asdasdas
+                String text = message.getText();
                 try {
 
-                    if (statereserve == 1){
+                    if (state == 1){
                         addProduct(bot, chatId, text);
 
                     } else
-                    if (statereserve == 2){
+                    if (state == 2){
                         try {
                             int lot = Integer.parseInt(text);
                             addlotProduct(bot, chatId, lot);
@@ -65,7 +53,7 @@ public class CotizacionProcessImpl extends AbstractProcess{
                             System.out.println(e);
                         }
 
-                    }else if(statereserve == 3){
+                    }else if(state == 3){
                         try {
                             int numdelete = Integer.parseInt(text);
                             deleteproduct(bot, chatId, numdelete);
@@ -138,7 +126,7 @@ public class CotizacionProcessImpl extends AbstractProcess{
                 sb.append("Precio: "+product.getPrice()+"\r\n");
         }
         sb.append("\nPor favor ingrese el id del producto a cotizar:\r\n");
-        statereserve = 1;
+        state = 1;
         sendStringBuffer(bot, chatId, sb);
 
         this.setStatus("AWAITING_USER_RESPONSE");
@@ -155,7 +143,7 @@ public class CotizacionProcessImpl extends AbstractProcess{
                 if(ProductosSolicitados.isEmpty()){
                     sb.append(product.getName()+" añadido a la cotización\r\n");
                     ProductosSolicitados.add(product);
-                    statereserve = 2;
+                    state = 2;
                     sb.append("Ingrese la cantidad deseada: \r\n");
                     sendStringBuffer(bot, chatId, sb);
                     Productfind = 1;
@@ -171,7 +159,7 @@ public class CotizacionProcessImpl extends AbstractProcess{
                     }else{
                         sb.append(product.getName()+" añadido a la cotización\r\n");
                         ProductosSolicitados.add(product);
-                        statereserve = 2;
+                        state = 2;
                         sb.append("Ingrese la cantidad deseada: \r\n");
                     }
                     sendStringBuffer(bot, chatId, sb);
@@ -182,7 +170,7 @@ public class CotizacionProcessImpl extends AbstractProcess{
         }
         if(Productfind == 0){
             sb.append("Producto no encontrado\r\n");
-            statereserve = 0;
+            state = 0;
             sendStringBuffer(bot, chatId, sb);
             showCotizaciónMenu(bot, chatId);
         }
@@ -192,7 +180,7 @@ public class CotizacionProcessImpl extends AbstractProcess{
     }
     private void addlotProduct(HhRrLongPollingBot bot, Long chatId, int text){
         ProductosSolicitados.get(ProductosSolicitados.size()-1).setLot(text+"");
-        statereserve = 0;
+        state = 0;
         StringBuffer sb = new StringBuffer();
         sb.append("Producto añadido a la cotización\r\n");
         sendStringBuffer(bot, chatId, sb);
@@ -209,7 +197,7 @@ public class CotizacionProcessImpl extends AbstractProcess{
             sb.append(num+") "+ product.getName()+"\r\n");
             num++;
         }
-        statereserve = 3;
+        state = 3;
         sendStringBuffer(bot, chatId, sb);
 
         this.setStatus("AWAITING_USER_RESPONSE");
@@ -218,7 +206,7 @@ public class CotizacionProcessImpl extends AbstractProcess{
         ProductosSolicitados.remove(text-1);
         StringBuffer sb = new StringBuffer();
         sb.append("Producto eliminado de la cotización\r\n");
-        statereserve = 0;
+        state = 0;
         sendStringBuffer(bot, chatId, sb);
         showCotizaciónMenu(bot, chatId);
         this.setStatus("AWAITING_USER_RESPONSE");
