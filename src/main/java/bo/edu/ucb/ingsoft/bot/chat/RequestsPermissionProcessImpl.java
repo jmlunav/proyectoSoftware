@@ -143,8 +143,11 @@ private int sw=0;
         sb1.append("Carnet: " + ci + " \r\n");
         sb1.append("Nombre: "+ nombre + " \r\n");
         sb1.append("Apellido: "+ apellido + " \r\n");
+        sb1.append("\r\n");
+        sb1.append("Elija una opción:\r\n");
         sb1.append("1. Guardar y volver al Menu Principal\r\n");
         sb1.append("2. Editar \r\n");
+
         sendStringBuffer(bot, chatId, sb1);
     }
     @Override
@@ -162,59 +165,6 @@ private int sw=0;
         return null;
     }
 
-
-        /*
-
-
-        //mostramos sus datos
-        sb.append("Muchas gracias sus datos son \r\n");
-        sb.append("Carnet: "+ci+ " \r\n");
-        sb.append("Nombre: "+nombre+ " \r\n");
-        sb.append("Apellido: "+apellido+ " \r\n");
-        sb.append("Carnet: "+celular+ " \r\n");
-        sb.append("Presione 1 para volver al menu principal \r\n");
-        sb.append("Presione 2 para salir \r\n");
-
-        this.setStatus("AWAITING_USER_RESPONSE");
-        //Aqui esperamos si escribe la opcion 1 o la opcion 2
-        MenuProcessImpl menu = new MenuProcessImpl();
-
-        if (this.getStatus().equals("AWAITING_USER_RESPONSE")) {
-            // Estamos esperando por un numero 1 o 2
-            Message message = update.getMessage();
-            if (message.hasText()) {
-                // Intentamos transformar en número
-                String text = message.getText(); // El texto contiene letras
-                try {
-                    int opcion = Integer.parseInt(text); //convertimos a numero
-                    switch (opcion) {
-                        case 1:
-                            menu.showMainMenu(bot, chatId);
-                            break;
-                        case 2:
-                            sb.append("Ten un excelente día \r\n");
-                            ;
-                            break;
-                        default:
-                            menu.showMainMenu(bot, chatId);
-                    }
-                } catch (NumberFormatException ex) {
-                    menu.showMainMenu(bot, chatId);
-                }
-                // continuar con el proceso seleccionado
-            } else { // Si me enviaron algo diferente de un texto.
-                menu.showMainMenu(bot, chatId);
-            }
-        }
-
-
-        try {
-           // bot.execute(sendMessage);
-        } catch (Exception ex) {
-            // relanzamos la excepción
-            throw new RuntimeException(ex);
-        }
-        */
 }
 
 
