@@ -32,7 +32,6 @@ public class CotizacionProcessImpl extends AbstractProcess{
             showCotizaciónMenu(bot, chatId);
 
         } else if (this.getStatus().equals("AWAITING_USER_RESPONSE")) {
-            // Estamos esperando por un numero 1 o 2
             Message message = update.getMessage();
             if ( message.hasText() ) {
 
