@@ -67,7 +67,7 @@ public class MenuProcessImpl extends AbstractProcess {
         return result;
     }
 
-    public void showMainMenu(HhRrLongPollingBot bot, Long chatId) {
+    private void showMainMenu(HhRrLongPollingBot bot, Long chatId) {
         StringBuffer sb = new StringBuffer();
         sb.append("MENU PRINCIPAL - BOT Metal Corp\r\n");
         sb.append("1. Realizar reserva de productos\r\n");
@@ -76,9 +76,9 @@ public class MenuProcessImpl extends AbstractProcess {
         sb.append("Elija una opción:\r\n");
         sendStringBuffer(bot, chatId, sb);
 
-        String nombre = "Juan";
+        /*String nombre = "Juan";
         String apellido = "Perez";
-        String nombreCompleto = nombre + " " + apellido;
+        String nombreCompleto = nombre + " " + apellido;*/
         this.setStatus("AWAITING_USER_RESPONSE");
     }
 
