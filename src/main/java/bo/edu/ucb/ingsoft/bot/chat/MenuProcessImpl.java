@@ -50,8 +50,10 @@ public class MenuProcessImpl extends AbstractProcess {
                     switch (opcion){
                         case 1 : result = new ReserveProcessImpl();
                         break;
-                        case 2 : result = new RequestsPermissionProcessImpl();
+                        case 2 : result = new CotizacionProcessImpl();
                         break;
+                        case 3 : result = new RequestsPermissionProcessImpl();
+                            break;
                         default: showMainMenu(bot, chatId);
                     }
                 } catch (NumberFormatException ex) {
@@ -69,7 +71,8 @@ public class MenuProcessImpl extends AbstractProcess {
         StringBuffer sb = new StringBuffer();
         sb.append("MENU PRINCIPAL - BOT Metal Corp\r\n");
         sb.append("1. Realizar reserva de productos\r\n");
-        sb.append("2. Registrar usuario\r\n");
+        sb.append("2. Solicitar Cotización\r\n");
+        sb.append("3. Registrar usuario\r\n");
         sb.append("Elija una opción:\r\n");
         sendStringBuffer(bot, chatId, sb);
 
