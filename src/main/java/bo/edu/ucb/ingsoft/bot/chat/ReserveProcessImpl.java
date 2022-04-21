@@ -35,6 +35,7 @@ public class ReserveProcessImpl extends AbstractProcess{
 
         if (this.getStatus().equals("STARTED")) {
             showReserveMenu(bot, chatId);
+
         } else if (this.getStatus().equals("AWAITING_USER_RESPONSE")) {
             // Estamos esperando por un numero 1 o 2
             Message message = update.getMessage();

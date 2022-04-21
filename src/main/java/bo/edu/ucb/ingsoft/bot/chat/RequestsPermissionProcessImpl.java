@@ -12,6 +12,7 @@ public class RequestsPermissionProcessImpl extends AbstractProcess {
       String nombre= "";
      String apellido= "";
      String celular = "";
+
     public RequestsPermissionProcessImpl() {
         this.setName("Iniciar registro del cliente");
         this.setDefault(false);
@@ -30,23 +31,45 @@ public class RequestsPermissionProcessImpl extends AbstractProcess {
     * va a registrar el nombre, apellido, celular, carnet*/
     @Override
     public AbstractProcess handle(Update update, HhRrLongPollingBot bot) {
-       /* SendMessage sendMessage = new SendMessage();
-        sendMessage.setChatId(chatId.toString());
-        sendMessage.setText(sb.toString());
-        */
-        AbstractProcess result = this;
+        AbstractProcess result = this; //marca que estoy en el mismo proceso
         Long chatId = update.getMessage().getChatId();
-        this.setStatus("AWAITING_USER_RESPONSE");
+
+        if (this.getStatus().equals("STARTED")) {
+            registrarCarnet(bot, chatId);
+
+        } else if (this.getStatus().equals("AWAITING_USER_RESPONSE")) {
+            Message message=update.getMessage();
+
+            if (message.hasText() ) {
+                String text = message.getText();
+                try {
+                    int opcion = Integer.parseInt(text);
+
+                    ci = Integer.parseInt(text); //Atrapamos el mensaje y convertimos a un numero entero
+                    System.out.println("guardamos el carnet: " + ci);
+                StringBuffer sb1 = new StringBuffer();
+                sb1.append("Muchas gracias sus datos son \r\n");
+                sb1.append("Carnet: " + ci + " \r\n");
+                sendStringBuffer(bot, chatId, sb1);
+
+                } catch (NumberFormatException ex) {
+                    registrarCarnet(bot, chatId);
+                }
+            } else {
+                registrarCarnet(bot, chatId);
+            }
+        }
+        /*
         StringBuffer sb = new StringBuffer();
         if (this.getStatus().equals("AWAITING_USER_RESPONSE") ) {
             sb.append("Ingrese el numero de carnet : \r\n");
             sendStringBuffer(bot, chatId, sb);
             //this.setStatus("AWAITING_USER_RESPONSE");
             System.out.println("esperamos que ingrese su carnet");
-            Message message=update.getMessage();
+            Message message1=update.getMessage();
 
-            if (message.hasText() ) {
-                String auxci = message.getText();
+            if (message1.hasText() ) {
+                String auxci = message1.getText();
                 ci = Integer.parseInt(auxci); //Atrapamos el mensaje y convertimos a un numero entero
                 System.out.println("guardamos el carnet: " + ci);
             }
@@ -65,7 +88,7 @@ public class RequestsPermissionProcessImpl extends AbstractProcess {
 
         }
         this.setStatus("AWAITING_USER_RESPONSE");
-
+        */
         /*aqui ingresará su nombre*/
        /*
         sb.append("Ingrese su nombre por favor : \r\n");
@@ -148,10 +171,17 @@ public class RequestsPermissionProcessImpl extends AbstractProcess {
             throw new RuntimeException(ex);
         }
         */
-        return this;
+        return result;
     }
 
-
+    //Aqui vamos a registrar al cliente: carnet
+    private void registrarCarnet (HhRrLongPollingBot bot, Long chatId){
+        StringBuffer sb = new StringBuffer();
+        sb.append("Registro al cliente \r\n");
+        sb.append("Por favor ingresa tu numero de carnet \r\n");
+        sendStringBuffer(bot, chatId, sb);
+        this.setStatus("AWAITING_USER_RESPONSE");
+    }
 
     @Override
     public AbstractProcess onError() {
@@ -170,3 +200,5 @@ public class RequestsPermissionProcessImpl extends AbstractProcess {
 
 
 }
+
+

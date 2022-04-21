@@ -57,7 +57,7 @@ public class HhRrLongPollingBot extends TelegramLongPollingBot {
         // Busco si ya existe Proceso en el map userSession
         AbstractProcess currentProcess = usersSession.get(chatId);
 
-        if (currentProcess == null) { // Primera vez que se contacto con nostros.
+        if (currentProcess == null) { // Primera vez que se contacto con nosotros.
             System.out.println("Creando proceso para el  chatId: " + chatId);
             // Debo crear el proceso por defecto
             currentProcess = new MenuProcessImpl();
