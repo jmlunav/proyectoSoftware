@@ -2,10 +2,19 @@ package bo.edu.ucb.ingsoft.bot.chat;
 
 import bo.edu.ucb.ingsoft.bot.bl.ProductBl;
 import bo.edu.ucb.ingsoft.bot.dto.ProductDto;
+import com.itextpdf.io.image.ImageDataFactory;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Image;
+import com.itextpdf.layout.element.Paragraph;
 import org.springframework.boot.web.servlet.server.Session;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -217,15 +226,18 @@ public class CotizacionProcessImpl extends AbstractProcess{
 
     private void showListProducts(HhRrLongPollingBot bot, Long chatId){
         StringBuffer sb = new StringBuffer();
-        sb.append("lista de productos:\r\n");
+        sb.append("Cotizacion:\r\n\n");
         int num = 1;
+        int suma = 0;
         for (ProductDto product: ProductosSolicitados){
 
             sb.append(num+") "+ product.getName()+":"+"\r\n");
             sb.append("\tPrecio: "+ product.getPrice()+""+"\r\n");
-            sb.append("\tCantidad: "+ product.getLot()+""+"\r\n");
+            sb.append("\tCantidad: "+ product.getLot()+""+"\r\n\n");
             num++;
+            suma= suma+Integer.parseInt(product.getPrice())*Integer.parseInt(product.getLot());
         }
+        sb.append("Costo Total de la cotización: "+suma+"\r\n");
         sendStringBuffer(bot, chatId, sb);
         showCotizaciónMenu(bot, chatId);
         this.setStatus("AWAITING_USER_RESPONSE");
