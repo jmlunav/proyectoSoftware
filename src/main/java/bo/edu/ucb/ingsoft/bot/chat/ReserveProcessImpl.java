@@ -134,6 +134,15 @@ public class ReserveProcessImpl extends AbstractProcess{
         StringBuffer sb = new StringBuffer();
         sb.append("Por favor ingrese el id del producto a reservar:\r\n");
         statereserve = 1;
+        ProductBl productBl = new ProductBl();
+        List<ProductDto> productDtoList = productBl.listproduct();
+
+        sb.append("LISTA DE PRODUCTOS DISPONIBLES\r\n\n");
+        for (ProductDto product: productDtoList){
+            sb.append("Id: "+product.getId()+" ");
+            sb.append("Nombre: "+product.getName()+" ");
+            sb.append("Precio: "+product.getPrice()+"\r\n");
+        }
         sendStringBuffer(bot, chatId, sb);
 
         this.setStatus("AWAITING_USER_RESPONSE");
