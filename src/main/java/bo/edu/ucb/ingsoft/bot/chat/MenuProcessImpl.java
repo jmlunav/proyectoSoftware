@@ -54,6 +54,8 @@ public class MenuProcessImpl extends AbstractProcess {
                         break;
                         case 3 : result = new RequestsPermissionProcessImpl();
                             break;
+                        case 4: result = new InfoEmpresa();
+                        break;
                         default: showMainMenu(bot, chatId);
                     }
                 } catch (NumberFormatException ex) {
@@ -72,7 +74,8 @@ public class MenuProcessImpl extends AbstractProcess {
         sb.append("MENU PRINCIPAL - BOT Metal Corp\r\n");
         sb.append("1. Realizar reserva de productos\r\n");
         sb.append("2. Solicitar Cotización\r\n");
-        sb.append("3. Registrar usuario\r\n");
+        sb.append("3. Regístrate \r\n");
+        sb.append("4. Conoce nuestras sucursales\r\n");
         sb.append("Elija una opción:\r\n");
         sendStringBuffer(bot, chatId, sb);
 
