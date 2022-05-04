@@ -159,7 +159,7 @@ public class ReserveProcessImpl extends AbstractProcess{
         List<ProductDto> productDtoList = productBl.listproduct();
         int Productfind = 0;
         for (ProductDto product: productDtoList){
-            if(product.getId().equals(text)){
+            if(product.getId()==Integer.parseInt(text)){
                 sb.append("Producto añadido al carrito:\r\n");
                 sb.append("Id: "+product.getId()+"\r\n");
                 sb.append("Nombre: "+product.getName()+"\r\n");
@@ -182,7 +182,7 @@ public class ReserveProcessImpl extends AbstractProcess{
         this.setStatus("AWAITING_USER_RESPONSE");
     }
     private void addlotProduct(HhRrLongPollingBot bot, Long chatId, int text){
-        carrito.get(carrito.size()-1).setLot(text+"");
+        carrito.get(carrito.size()-1).setStock(text);
         statereserve = 0;
         StringBuffer sb = new StringBuffer();
         sb.append("Producto añadido al carrito\r\n");
@@ -221,7 +221,7 @@ public class ReserveProcessImpl extends AbstractProcess{
         sb.append("lista de productos:\r\n");
         for (ProductDto product: carrito){
 
-            sb.append(num+") "+ product.getName()+"|    Cantidad: "+product.getLot()+"\r\n");
+            sb.append(num+") "+ product.getName()+"|    Cantidad: "+product.getStock()+"\r\n");
             num++;
         }
         sb.append("La solicitud de reserva fue enviada.\r\n");
@@ -238,7 +238,7 @@ public class ReserveProcessImpl extends AbstractProcess{
 
             sb.append(num+") "+ product.getName()+":"+"\r\n");
             sb.append("\tPrecio: "+ product.getPrice()+""+"\r\n");
-            sb.append("\tCantidad: "+ product.getLot()+""+"\r\n");
+            sb.append("\tCantidad: "+ product.getStock()+""+"\r\n");
             num++;
         }
         sendStringBuffer(bot, chatId, sb);

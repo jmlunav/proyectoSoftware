@@ -1,19 +1,17 @@
 package bo.edu.ucb.ingsoft.bot.dto;
 
-import java.math.BigDecimal;
-
-public class ProductDto {
+public class SubsidiaryDto {
     private int id;
     private String name;
-    private BigDecimal price;
-    private int stock;
+    private String location;
+    private String timetable;
     private String status;
 
-    public ProductDto(int id, String name, BigDecimal price, int stock, String status) {
+    public SubsidiaryDto(int id, String name, String location, String timetable, String status) {
         this.id = id;
         this.name = name;
-        this.price = price;
-        this.stock = stock;
+        this.location = location;
+        this.timetable = timetable;
         this.status = status;
     }
 
@@ -33,20 +31,20 @@ public class ProductDto {
         this.name = name;
     }
 
-    public BigDecimal getPrice() {
-        return price;
+    public String getLocation() {
+        return location;
     }
 
-    public void setPrice(BigDecimal price) {
-        this.price = price;
+    public void setLocation(String location) {
+        this.location = location;
     }
 
-    public int getStock() {
-        return stock;
+    public String getTimetable() {
+        return timetable;
     }
 
-    public void setStock(int stock) {
-        this.stock = stock;
+    public void setTimetable(String timetable) {
+        this.timetable = timetable;
     }
 
     public String getStatus() {

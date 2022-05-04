@@ -10,8 +10,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CotizacionProcessImpl extends AbstractProcess{
+    @Override
+    public AbstractProcess handle(ApplicationContext context, Update update, HhRrLongPollingBot bot) {
+        return null;
+    }
 
-    private int state = 0;
+    @Override
+    public AbstractProcess onError() {
+        return null;
+    }
+
+    @Override
+    public AbstractProcess onSuccess() {
+        return null;
+    }
+
+    @Override
+    public AbstractProcess onTimeout() {
+        return null;
+    }
+
+    /*private int state = 0;
     private List<ProductDto> ProductosSolicitados = new ArrayList<>();
 
     public CotizacionProcessImpl(){
@@ -216,14 +235,14 @@ public class CotizacionProcessImpl extends AbstractProcess{
         StringBuffer sb = new StringBuffer();
         sb.append("Cotizacion:\r\n\n");
         int num = 1;
-        int suma = 0;
+        double suma = 0;
         for (ProductDto product: ProductosSolicitados){
 
             sb.append(num+") "+ product.getName()+":"+"\r\n");
             sb.append("\tPrecio: "+ product.getPrice()+""+"\r\n");
-            sb.append("\tCantidad: "+ product.getLot()+""+"\r\n\n");
+            sb.append("\tCantidad: "+ product.getStock()+""+"\r\n\n");
             num++;
-            suma= suma+Integer.parseInt(product.getPrice())*Integer.parseInt(product.getLot());
+            suma= suma+(product.getPrice())*(product.getStock());
         }
         sb.append("Costo Total de la cotización: "+suma+"\r\n");
         sendStringBuffer(bot, chatId, sb);
@@ -246,5 +265,5 @@ public class CotizacionProcessImpl extends AbstractProcess{
     @Override
     public AbstractProcess onTimeout() {
         return null;
-    }
+    }*/
 }
