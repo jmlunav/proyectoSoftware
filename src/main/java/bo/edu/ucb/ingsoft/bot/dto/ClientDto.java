@@ -46,7 +46,7 @@ public class ClientDto {
     }
     @Override
     public String toString() {
-        return "PermissionDto{" +
+        return "PermissionDto2{" +
                 "startDate='" + name + '\'' +
                 ", endDate='" + surname + '\'' +
                 ", reason='" + ci + '\'' +

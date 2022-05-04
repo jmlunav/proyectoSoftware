@@ -20,10 +20,12 @@ import java.util.List;
 public class ReserveProcessImpl extends AbstractProcess{
 
     private int statereserve = 0;
+    private ProductBl productBl;
     private List<ProductDto> carrito = new ArrayList<>();
 
-
-    public ReserveProcessImpl(){
+    @Autowired
+    public ReserveProcessImpl(ProductBl productBl){
+        this.productBl = productBl;
         this.setName("Iniciar Reservacion");
         this.setDefault(false);
         this.setExpires(false);
@@ -139,8 +141,7 @@ public class ReserveProcessImpl extends AbstractProcess{
         StringBuffer sb = new StringBuffer();
         sb.append("Por favor ingrese el id del producto a reservar:\r\n");
         statereserve = 1;
-        ProductBl productBl = new ProductBl();
-        List<ProductDto> productDtoList = productBl.listproduct();
+        List<ProductDto> productDtoList = productBl.listAllProduct();
 
         sb.append("LISTA DE PRODUCTOS DISPONIBLES\r\n\n");
         for (ProductDto product: productDtoList){
@@ -154,9 +155,7 @@ public class ReserveProcessImpl extends AbstractProcess{
     }
     private void addProduct(HhRrLongPollingBot bot, Long chatId, String text){
         StringBuffer sb = new StringBuffer();
-
-        ProductBl productBl = new ProductBl();
-        List<ProductDto> productDtoList = productBl.listproduct();
+        List<ProductDto> productDtoList = productBl.listAllProduct();
         int Productfind = 0;
         for (ProductDto product: productDtoList){
             if(product.getId()==Integer.parseInt(text)){

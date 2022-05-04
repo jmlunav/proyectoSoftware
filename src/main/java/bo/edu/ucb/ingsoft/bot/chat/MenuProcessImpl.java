@@ -50,9 +50,8 @@ public class MenuProcessImpl extends AbstractProcess {
                 try {
                     int opcion = Integer.parseInt(text);
                     switch (opcion){
-                        //case 1 : result = new ReserveProcessImpl();
-                        case 1: result = context.getBean(QueryPastRequestsProcessImpl.class);
-
+                        case 1 : result = context.getBean(ReserveProcessImpl.class);
+                        //case 1: result = context.getBean(QueryPastRequestsProcessImpl.class);
                         break;
                         case 2 : result = new CotizacionProcessImpl();
                         break;

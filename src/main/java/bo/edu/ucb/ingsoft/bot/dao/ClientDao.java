@@ -13,4 +13,7 @@ public interface ClientDao {
     @Select("SELECT c.name as name, c.lastname as surname, c.ci as ci, c.status as reserve_status" +
             " FROM \"Client\" c")
     List<ClientDto> findAllPermissionByBotChatId(String botChatId);
+    @Select("SELECT c.name as name, c.lastname as surname, c.ci as ci, c.status as reserve_status" +
+            " FROM \"Client\" c")
+    List<ClientDto> findAllPermissionByBotChatId2(String botChatId);
 }
