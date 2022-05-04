@@ -6,7 +6,9 @@ import bo.edu.ucb.ingsoft.bot.bl.ProductBl;
 import bo.edu.ucb.ingsoft.bot.dto.ClientDto;
 import bo.edu.ucb.ingsoft.bot.dto.PermissionDto;
 import bo.edu.ucb.ingsoft.bot.dto.ProductDto;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -14,10 +16,12 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class ReserveProcessImpl extends AbstractProcess{
 
     private int statereserve = 0;
     private List<ProductDto> carrito = new ArrayList<>();
+
 
     public ReserveProcessImpl(){
         this.setName("Iniciar Reservacion");

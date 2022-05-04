@@ -1,19 +1,18 @@
 package bo.edu.ucb.ingsoft.bot.chat;
 
 import bo.edu.ucb.ingsoft.bot.bl.ClientBl;
-import bo.edu.ucb.ingsoft.bot.bl.PermissionBl;
 import bo.edu.ucb.ingsoft.bot.dto.ClientDto;
-import bo.edu.ucb.ingsoft.bot.dto.PermissionDto;
-import org.jvnet.hk2.annotations.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import java.util.List;
 
 @Service
 public class QueryPastRequestsProcessImpl extends AbstractProcess {
+
 
     private ClientBl clientBl;
 
@@ -37,7 +36,7 @@ public class QueryPastRequestsProcessImpl extends AbstractProcess {
 
     @Override
     public AbstractProcess handle(ApplicationContext context, Update update, HhRrLongPollingBot bot) {
-        /*Long chatId = update.getMessage().getChatId();
+        Long chatId = update.getMessage().getChatId();
 
         List<ClientDto> permissionList = clientBl.findLast10PermissionsByChatId(chatId);
         StringBuffer sb = new StringBuffer();
@@ -46,10 +45,8 @@ public class QueryPastRequestsProcessImpl extends AbstractProcess {
         sb.append(" permisos. Bajo el siguiente detalle\r\n");
         for(ClientDto permission: permissionList) {
             sb.append(permission.toString()).append("\n\r");
-        }*/
-        StringBuffer sb = new StringBuffer();
-        sb.append("asdasdasdas");
-        Long chatId = update.getMessage().getChatId();
+        }
+
         sendStringBuffer(bot, chatId, sb);
         return new MenuProcessImpl();
     }

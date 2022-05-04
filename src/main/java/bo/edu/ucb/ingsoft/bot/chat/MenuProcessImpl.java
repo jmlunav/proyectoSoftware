@@ -1,5 +1,9 @@
 package bo.edu.ucb.ingsoft.bot.chat;
 
+import bo.edu.ucb.ingsoft.bot.bl.ClientBl;
+import bo.edu.ucb.ingsoft.bot.dao.ClientDao;
+import bo.edu.ucb.ingsoft.bot.dto.ClientDto;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -7,6 +11,7 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import java.util.HashMap;
 
 public class MenuProcessImpl extends AbstractProcess {
+
 
     public MenuProcessImpl() {
         this.setName("Menú principal");
