@@ -1,15 +1,10 @@
 package bo.edu.ucb.ingsoft.bot.chat;
 
-import bo.edu.ucb.ingsoft.bot.chat.widgets.AbstractWidget;
-import bo.edu.ucb.ingsoft.bot.chat.widgets.MenuWidgetImpl;
-import org.telegram.telegrambots.bots.TelegramLongPollingBot;
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.springframework.context.ApplicationContext;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class MenuProcessImpl extends AbstractProcess {
 
@@ -30,8 +25,10 @@ public class MenuProcessImpl extends AbstractProcess {
 //    }
 
 
+
+
     @Override
-    public AbstractProcess handle(Update update, HhRrLongPollingBot bot) {
+    public AbstractProcess handle(ApplicationContext context, Update update, HhRrLongPollingBot bot) {
         AbstractProcess result = this; // sigo en el mismo proceso.
         Long chatId = update.getMessage().getChatId();
 
@@ -48,7 +45,9 @@ public class MenuProcessImpl extends AbstractProcess {
                 try {
                     int opcion = Integer.parseInt(text);
                     switch (opcion){
-                        case 1 : result = new ReserveProcessImpl();
+                        //case 1 : result = new ReserveProcessImpl();
+                        case 1: result = context.getBean(QueryPastRequestsProcessImpl.class);
+
                         break;
                         case 2 : result = new CotizacionProcessImpl();
                         break;

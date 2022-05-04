@@ -1,5 +1,6 @@
 package bo.edu.ucb.ingsoft.bot.chat;
 
+import org.springframework.context.ApplicationContext;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
@@ -17,7 +18,7 @@ public class InfoEmpresa extends AbstractProcess{
 
 
     @Override
-    public AbstractProcess handle(Update update, HhRrLongPollingBot bot) {
+    public AbstractProcess handle(ApplicationContext context, Update update, HhRrLongPollingBot bot) {
         AbstractProcess result = this; //marca que estoy en el mismo proceso
         Long chatId = update.getMessage().getChatId();
 

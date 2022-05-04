@@ -6,6 +6,7 @@ import bo.edu.ucb.ingsoft.bot.bl.ProductBl;
 import bo.edu.ucb.ingsoft.bot.dto.ClientDto;
 import bo.edu.ucb.ingsoft.bot.dto.PermissionDto;
 import bo.edu.ucb.ingsoft.bot.dto.ProductDto;
+import org.springframework.context.ApplicationContext;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -28,7 +29,7 @@ public class ReserveProcessImpl extends AbstractProcess{
 
     }
     @Override
-    public AbstractProcess handle(Update update, HhRrLongPollingBot bot) {
+    public AbstractProcess handle(ApplicationContext context, Update update, HhRrLongPollingBot bot) {
 
         AbstractProcess result = this; // sigo en el mismo proceso.
         Long chatId = update.getMessage().getChatId();
@@ -241,7 +242,7 @@ public class ReserveProcessImpl extends AbstractProcess{
         this.setStatus("AWAITING_USER_RESPONSE");
     }
 
-    private void showReserveMenu2(HhRrLongPollingBot bot, Long chatId) {
+   /* private void showReserveMenu2(HhRrLongPollingBot bot, Long chatId) {
         ClientBl clientBl = new ClientBl();
         List<ClientDto> clientDtoList = clientBl.findLast10PermissionsByChatId(chatId);
         StringBuffer sb = new StringBuffer();
@@ -258,7 +259,7 @@ public class ReserveProcessImpl extends AbstractProcess{
         sendStringBuffer(bot, chatId, sb);
         this.setStatus("AWAITING_USER_RESPONSE");
 
-    }
+    }*/
 
     @Override
     public AbstractProcess onError() {

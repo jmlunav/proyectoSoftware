@@ -2,6 +2,7 @@ package bo.edu.ucb.ingsoft.bot.chat;
 
 import bo.edu.ucb.ingsoft.bot.bl.ProductBl;
 import bo.edu.ucb.ingsoft.bot.dto.ProductDto;
+import org.springframework.context.ApplicationContext;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
@@ -23,7 +24,7 @@ public class CotizacionProcessImpl extends AbstractProcess{
 
     }
     @Override
-    public AbstractProcess handle(Update update, HhRrLongPollingBot bot) {
+    public AbstractProcess handle(ApplicationContext context, Update update, HhRrLongPollingBot bot) {
 
         AbstractProcess result = this; // sigo en el mismo proceso.
         Long chatId = update.getMessage().getChatId();
@@ -229,6 +230,8 @@ public class CotizacionProcessImpl extends AbstractProcess{
         showCotizaciónMenu(bot, chatId);
         this.setStatus("AWAITING_USER_RESPONSE");
     }
+
+
 
     @Override
     public AbstractProcess onError() {

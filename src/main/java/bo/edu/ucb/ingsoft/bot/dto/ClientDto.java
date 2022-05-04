@@ -2,13 +2,13 @@ package bo.edu.ucb.ingsoft.bot.dto;
 
 public class ClientDto {
     private String name; //nombre
-    private String lastname; //apellido
+    private String surname; //apellido
     private String ci; //carnet
     private String reserve_status;
 
     public ClientDto(String name, String surname, String ci, String reserve_status) {
         this.name = name;
-        this.lastname = surname;
+        this.surname = surname;
         this.ci = ci;
         this.reserve_status = reserve_status;
     }
@@ -18,7 +18,7 @@ public class ClientDto {
     }
 
     public String getSurname() {
-        return lastname;
+        return surname;
     }
 
     public String getCi() {
@@ -34,7 +34,7 @@ public class ClientDto {
     }
 
     public void setSurname(String surname) {
-        this.lastname = surname;
+        this.surname = surname;
     }
 
     public void setCi(String ci) {
@@ -48,7 +48,7 @@ public class ClientDto {
     public String toString() {
         return "PermissionDto{" +
                 "startDate='" + name + '\'' +
-                ", endDate='" + lastname + '\'' +
+                ", endDate='" + surname + '\'' +
                 ", reason='" + ci + '\'' +
                 '}';
     }

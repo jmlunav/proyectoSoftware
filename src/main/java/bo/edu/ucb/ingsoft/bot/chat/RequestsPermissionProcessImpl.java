@@ -1,6 +1,7 @@
 package bo.edu.ucb.ingsoft.bot.chat;
 
 import bo.edu.ucb.ingsoft.bot.chat.widgets.AbstractWidget;
+import org.springframework.context.ApplicationContext;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
@@ -27,7 +28,7 @@ private int sw=0;
     /*Aqui haremos la interaccion del usuario y el bot
     * va a registrar el nombre, apellido, celular, carnet*/
     @Override
-    public AbstractProcess handle(Update update, HhRrLongPollingBot bot) {
+    public AbstractProcess handle(ApplicationContext context, Update update, HhRrLongPollingBot bot) {
         AbstractProcess result = this; //marca que estoy en el mismo proceso
         Long chatId = update.getMessage().getChatId();
 
