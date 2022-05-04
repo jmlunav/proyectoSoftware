@@ -3,6 +3,7 @@ package bo.edu.ucb.ingsoft.bot.chat;
 import bo.edu.ucb.ingsoft.bot.bl.ClientBl;
 import bo.edu.ucb.ingsoft.bot.bl.PermissionBl;
 import bo.edu.ucb.ingsoft.bot.bl.ProductBl;
+import bo.edu.ucb.ingsoft.bot.bl.ReserveBl;
 import bo.edu.ucb.ingsoft.bot.dto.ClientDto;
 import bo.edu.ucb.ingsoft.bot.dto.PermissionDto;
 import bo.edu.ucb.ingsoft.bot.dto.ProductDto;
@@ -14,6 +15,7 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -21,11 +23,13 @@ public class ReserveProcessImpl extends AbstractProcess{
 
     private int statereserve = 0;
     private ProductBl productBl;
+    private ReserveBl reserveBl;
     private List<ProductDto> carrito = new ArrayList<>();
 
     @Autowired
-    public ReserveProcessImpl(ProductBl productBl){
+    public ReserveProcessImpl(ProductBl productBl, ReserveBl reserveBl){
         this.productBl = productBl;
+        this.reserveBl = reserveBl;
         this.setName("Iniciar Reservacion");
         this.setDefault(false);
         this.setExpires(false);
@@ -223,6 +227,8 @@ public class ReserveProcessImpl extends AbstractProcess{
             sb.append(num+") "+ product.getName()+"|    Cantidad: "+product.getStock()+"\r\n");
             num++;
         }
+        Date fecha = new Date();
+        reserveBl.CreateReserve(1, fecha);
         sb.append("La solicitud de reserva fue enviada.\r\n");
         sb.append("Por favor, recoja sus productos en un plazo maximo de 5 dias a partir de la fecha\r\n");
         sendStringBuffer(bot, chatId, sb);
