@@ -1,12 +1,10 @@
 package bo.edu.ucb.ingsoft.bot.chat;
 
-import bo.edu.ucb.ingsoft.bot.bl.ClientBl;
-import bo.edu.ucb.ingsoft.bot.bl.PermissionBl;
-import bo.edu.ucb.ingsoft.bot.bl.ProductBl;
-import bo.edu.ucb.ingsoft.bot.bl.ReserveBl;
+import bo.edu.ucb.ingsoft.bot.bl.*;
 import bo.edu.ucb.ingsoft.bot.dto.ClientDto;
 import bo.edu.ucb.ingsoft.bot.dto.PermissionDto;
 import bo.edu.ucb.ingsoft.bot.dto.ProductDto;
+import bo.edu.ucb.ingsoft.bot.dto.ReserveDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
@@ -24,12 +22,14 @@ public class ReserveProcessImpl extends AbstractProcess{
     private int statereserve = 0;
     private ProductBl productBl;
     private ReserveBl reserveBl;
+    private ProductReBl productReBl;
     private List<ProductDto> carrito = new ArrayList<>();
 
     @Autowired
-    public ReserveProcessImpl(ProductBl productBl, ReserveBl reserveBl){
+    public ReserveProcessImpl(ProductBl productBl, ReserveBl reserveBl, ProductReBl productReBl){
         this.productBl = productBl;
         this.reserveBl = reserveBl;
+        this.productReBl = productReBl;
         this.setName("Iniciar Reservacion");
         this.setDefault(false);
         this.setExpires(false);
@@ -219,21 +219,32 @@ public class ReserveProcessImpl extends AbstractProcess{
         this.setStatus("AWAITING_USER_RESPONSE");
     }
     private void sendRequestReserve(HhRrLongPollingBot bot, Long chatId){
-        StringBuffer sb = new StringBuffer();
-        int num = 1;
-        sb.append("lista de productos:\r\n");
-        for (ProductDto product: carrito){
+        if(carrito.size()==0){
+            StringBuffer sb = new StringBuffer();
+            sb.append("La lista de productos reservados esta vacia. POR  FAVOR AÑADA UN PRODUCTO\n");
+            sendStringBuffer(bot, chatId, sb);
+            showReserveMenu(bot, chatId);
+        }else{
+            StringBuffer sb = new StringBuffer();
+            int num = 1;
+            sb.append("lista de productos:\r\n");
+            List<ReserveDto> reservetoList = reserveBl.listAllReserve();
+            for (ProductDto product: carrito){
+                productReBl.addProductRe(reservetoList.size()+1, product.getId(), product.getStock(), "1");
+                sb.append(num+") "+ product.getName()+"|    Cantidad: "+product.getStock()+"\r\n");
+                num++;
+            }
+            Date fecha = new Date();
+            reserveBl.CreateReserve(1, fecha);
+            sb.append("La solicitud de reserva fue enviada.\r\n");
+            sb.append("Por favor, recoja sus productos en un plazo maximo de 5 dias a partir de la fecha\r\n");
+            sendStringBuffer(bot, chatId, sb);
 
-            sb.append(num+") "+ product.getName()+"|    Cantidad: "+product.getStock()+"\r\n");
-            num++;
+            this.setStatus("AWAITING_USER_RESPONSE");
+            MenuProcessImpl mn = new MenuProcessImpl();
         }
-        Date fecha = new Date();
-        reserveBl.CreateReserve(1, fecha);
-        sb.append("La solicitud de reserva fue enviada.\r\n");
-        sb.append("Por favor, recoja sus productos en un plazo maximo de 5 dias a partir de la fecha\r\n");
-        sendStringBuffer(bot, chatId, sb);
 
-        this.setStatus("AWAITING_USER_RESPONSE");
+
     }
     private void showListProducts(HhRrLongPollingBot bot, Long chatId){
         StringBuffer sb = new StringBuffer();
