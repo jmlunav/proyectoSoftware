@@ -18,16 +18,17 @@ public class ClientBl {
         this.clientDao = clientDao;
     }
 
+    public Integer getIdCLientforChatid (String chatid){
+        return clientDao.getidCLientforChatid(chatid);
+    }
+    public void createClient(String name, String lastname, String ci, String status, String chatid){
+        clientDao.createClient(name, lastname, ci, status, chatid);
+    }
 
 
     public List<ClientDto> findLast10PermissionsByChatId(Long chatId) {
         return clientDao.findAllPermissionByBotChatId(chatId+"");
     }
 
-    public List<ClientDto> findLast10PermissionsByChatId2(Long chatId) {
-        List<ClientDto> result = new ArrayList<>();
-        result.add(new ClientDto("Juan", "Perez", "12345678", "0"));
-        result.add(new ClientDto("Pablo", "Aguirre", "87654321", "1"));
-        return result;
-    }
+
 }
