@@ -23,13 +23,15 @@ public class ReserveProcessImpl extends AbstractProcess{
     private ProductBl productBl;
     private ReserveBl reserveBl;
     private ProductReBl productReBl;
+    private ClientBl clientBl;
     private List<ProductDto> carrito = new ArrayList<>();
 
     @Autowired
-    public ReserveProcessImpl(ProductBl productBl, ReserveBl reserveBl, ProductReBl productReBl){
+    public ReserveProcessImpl(ProductBl productBl, ReserveBl reserveBl, ProductReBl productReBl, ClientBl clientBl){
         this.productBl = productBl;
         this.reserveBl = reserveBl;
         this.productReBl = productReBl;
+        this.clientBl = clientBl;
         this.setName("Iniciar Reservacion");
         this.setDefault(false);
         this.setExpires(false);
@@ -45,8 +47,12 @@ public class ReserveProcessImpl extends AbstractProcess{
         Long chatId = update.getMessage().getChatId();
 
         if (this.getStatus().equals("STARTED")) {
-            showReserveMenu(bot, chatId);
-
+            if(clientBl.getIdCLientforChatid(chatId+"")==null){
+                ClientRegisterMessage(bot, chatId);
+                result = new MenuProcessImpl();
+            }else {
+                showReserveMenu(bot, chatId);
+            }
         } else if (this.getStatus().equals("AWAITING_USER_RESPONSE")) {
             // Estamos esperando por un numero 1 o 2
             Message message = update.getMessage();
@@ -115,6 +121,15 @@ public class ReserveProcessImpl extends AbstractProcess{
 
     }
 
+    private void ClientRegisterMessage(HhRrLongPollingBot bot, Long chatId){
+        StringBuffer sb = new StringBuffer();
+        sb.append("USTED NO SE ENCUENTRA REGISTRADO \r\n");
+        sb.append("Para usar esta función debe registrarse. \r\n");
+        sb.append("(pulse cualquier tecla para volver al menu principal)\r\n");
+        sendStringBuffer(bot, chatId, sb);
+
+        this.setStatus("STARTED");
+    }
     private void showReserveMenu(HhRrLongPollingBot bot, Long chatId) {
 
         StringBuffer sb = new StringBuffer();
