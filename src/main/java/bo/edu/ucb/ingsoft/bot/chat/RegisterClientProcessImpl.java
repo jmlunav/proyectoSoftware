@@ -1,11 +1,15 @@
 package bo.edu.ucb.ingsoft.bot.chat;
 
 import bo.edu.ucb.ingsoft.bot.bl.ClientBl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
+
+
 
 @Service
 public class RegisterClientProcessImpl extends AbstractProcess {
@@ -15,7 +19,7 @@ public class RegisterClientProcessImpl extends AbstractProcess {
     String apellido= "";
     private int sw=0;
     private ClientBl clientBl;
-
+    private Logger logger = LoggerFactory.getLogger(RegisterClientProcessImpl.class);
     @Autowired
     public RegisterClientProcessImpl(ClientBl clientBl) {
         this.clientBl = clientBl;
@@ -54,27 +58,27 @@ public class RegisterClientProcessImpl extends AbstractProcess {
                             try {
                                 int aux = Integer.parseInt(text); // convertimos a un numero entero
                                 ci = aux;
-                                System.out.println("guardamos el carnet: " + ci);
+                                logger.info("guardamos el carnet: " + ci);
                                 registrarnombre(bot,chatId,text);
                             } catch (NumberFormatException ex) {
                                 registrarCarnet(bot, chatId);
-                                System.out.println("aqui encontro un error");
+                                logger.error("aqui encontro un error");
                             }
                             break;
                         case 11:
                             try {
                                 nombre= text;
                             }catch (NumberFormatException ex) {
-                                System.out.println("aqui encontro un error");
+                                logger.error("aqui encontro un error");
                             } finally {
-                                System.out.println("guardamos el nombre: "+nombre);
+                                logger.info("guardamos el nombre: "+nombre);
                                 registrarapellido(bot,chatId,text);
                             }
                             break;
                         case 22:
                             sw =33;
                             apellido= text;
-                            System.out.println("guardamos el apellido: "+apellido);
+                            logger.info("guardamos el apellido: "+apellido);
                             mostrarDatos(bot,chatId);
                             break;
                     }
@@ -111,7 +115,7 @@ public class RegisterClientProcessImpl extends AbstractProcess {
     //aqui registramos el apellido del cliente
     private void registrarapellido(HhRrLongPollingBot bot, Long chatId, String text) {
 
-        System.out.println("entramos en la funcion apellido");
+        logger.info("entramos en la funcion apellido");
 
         StringBuffer sb = new StringBuffer();
         sb.append("Por favor ingresa tu apellido \r\n");
