@@ -48,9 +48,10 @@ public class MenuProcessImpl extends AbstractProcess {
                     switch (opcion){
                         case 1 : result = context.getBean(RegisterClientProcessImpl.class);
                         break;
-                        case 2 : result = context.getBean(CotizacionProcessImpl.class);
+                        case 2 : result = context.getBean(ReserveProcessImpl.class);
                         break;
-                        case 3 : result = context.getBean(ReserveProcessImpl.class);
+                        case 3 :
+                            result = context.getBean(CotizacionProcessImpl.class);
                             break;
                         case 4: result = new InfoEmpresa();
                         break;
@@ -71,8 +72,8 @@ public class MenuProcessImpl extends AbstractProcess {
         StringBuffer sb = new StringBuffer();
         sb.append("MENU PRINCIPAL - BOT Metal Corp\r\n");
         sb.append("1. Regístrate \r\n");
-        sb.append("2. Solicitar Cotización\r\n");
-        sb.append("3. Realizar reserva de productos\r\n");
+        sb.append("2. Realizar reserva de productos\r\n");
+        sb.append("3. Solicitar Cotización\r\n");
         sb.append("4. Conoce nuestras sucursales\r\n");
         sb.append("Elija una opción:\r\n");
         sendStringBuffer(bot, chatId, sb);
