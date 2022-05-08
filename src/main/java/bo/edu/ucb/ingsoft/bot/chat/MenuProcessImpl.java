@@ -46,12 +46,11 @@ public class MenuProcessImpl extends AbstractProcess {
                 try {
                     int opcion = Integer.parseInt(text);
                     switch (opcion){
-                        case 1 : result = context.getBean(ReserveProcessImpl.class);
-                        //case 1: result = context.getBean(QueryPastRequestsProcessImpl.class);
+                        case 1 : result = context.getBean(RegisterClientProcessImpl.class);
                         break;
                         case 2 : result = context.getBean(CotizacionProcessImpl.class);
                         break;
-                        case 3 : result = context.getBean(RegisterClientProcessImpl.class);
+                        case 3 : result = context.getBean(ReserveProcessImpl.class);
                             break;
                         case 4: result = new InfoEmpresa();
                         break;
@@ -71,16 +70,13 @@ public class MenuProcessImpl extends AbstractProcess {
     private void showMainMenu(HhRrLongPollingBot bot, Long chatId) {
         StringBuffer sb = new StringBuffer();
         sb.append("MENU PRINCIPAL - BOT Metal Corp\r\n");
-        sb.append("1. Realizar reserva de productos\r\n");
+        sb.append("1. Regístrate \r\n");
         sb.append("2. Solicitar Cotización\r\n");
-        sb.append("3. Regístrate \r\n");
+        sb.append("3. Realizar reserva de productos\r\n");
         sb.append("4. Conoce nuestras sucursales\r\n");
         sb.append("Elija una opción:\r\n");
         sendStringBuffer(bot, chatId, sb);
 
-        /*String nombre = "Juan";
-        String apellido = "Perez";
-        String nombreCompleto = nombre + " " + apellido;*/
         this.setStatus("AWAITING_USER_RESPONSE");
     }
 
