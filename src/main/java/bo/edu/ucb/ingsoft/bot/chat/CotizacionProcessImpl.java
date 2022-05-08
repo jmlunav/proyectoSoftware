@@ -2,13 +2,22 @@ package bo.edu.ucb.ingsoft.bot.chat;
 
 import bo.edu.ucb.ingsoft.bot.bl.*;
 import bo.edu.ucb.ingsoft.bot.dto.ProductDto;
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.html.WebColors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 
+import com.itextpdf.text.Image;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -79,7 +88,7 @@ public class CotizacionProcessImpl extends AbstractProcess{
                                 showListProducts(bot, chatId);
                                 break;
                             case 4:
-
+                                generateCotazacionPdf(bot, chatId);
                                 break;
                             case 5:
                                 result = new MenuProcessImpl();
@@ -100,6 +109,48 @@ public class CotizacionProcessImpl extends AbstractProcess{
         return result;
 
     }
+
+    private void generateCotazacionPdf(HhRrLongPollingBot bot, Long chatId) {
+        Document documento = new Document();
+        StringBuffer sb = new StringBuffer();
+        int num=1;
+
+        try{
+            Image header = Image.getInstance("/ProyectoSoftware/src/main/java/bo/edu/ucb/ingsoft/bot/images/Cabecera.jpg");
+            header.scaleToFit(500,1000);
+            header.setAlignment(Chunk.ALIGN_CENTER);
+
+            String ruta = System.getProperty("user.home");
+            PdfWriter.getInstance(documento, new FileOutputStream(ruta + "/Desktop/Cotización.pdf"));
+            documento.open();
+            documento.add(header);
+
+            PdfPTable tabla = new PdfPTable(4);
+            tabla.addCell("Numero");
+            tabla.addCell("Producto");
+            tabla.addCell("Precio");
+            tabla.addCell("Cantidad");
+
+            for (ProductDto product: ProductosSolicitados){
+                tabla.addCell(String.valueOf(num));
+                tabla.addCell(product.getName());
+                tabla.addCell(String.valueOf(product.getPrice()));
+                tabla.addCell(String.valueOf(product.getStock()));
+                num++;
+            }
+            documento.add(tabla);
+            documento.close();
+            sb.append("Cotizacion creada Exitosamente\r\n");
+
+        }catch (Exception e){
+        }
+        sendStringBuffer(bot, chatId, sb);
+        showCotizaciónMenu(bot, chatId);
+        this.setStatus("AWAITING_USER_RESPONSE");
+
+    }
+
+
 
     private void showCotizaciónMenu(HhRrLongPollingBot bot, Long chatId) {
 
