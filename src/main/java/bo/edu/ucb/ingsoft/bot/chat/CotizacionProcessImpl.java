@@ -1,44 +1,31 @@
 package bo.edu.ucb.ingsoft.bot.chat;
 
-import bo.edu.ucb.ingsoft.bot.bl.ProductBl;
+import bo.edu.ucb.ingsoft.bot.bl.*;
 import bo.edu.ucb.ingsoft.bot.dto.ProductDto;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.stereotype.Service;
+import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class CotizacionProcessImpl extends AbstractProcess{
-    @Override
-    public AbstractProcess handle(ApplicationContext context, Update update, HhRrLongPollingBot bot) {
-        return null;
-    }
 
-    @Override
-    public AbstractProcess onError() {
-        return null;
-    }
-
-    @Override
-    public AbstractProcess onSuccess() {
-        return null;
-    }
-
-    @Override
-    public AbstractProcess onTimeout() {
-        return null;
-    }
-
-    /*private int state = 0;
+    private int state= 0;
+    private ProductBl productBl;
     private List<ProductDto> ProductosSolicitados = new ArrayList<>();
 
-    public CotizacionProcessImpl(){
+    @Autowired
+    public CotizacionProcessImpl(ProductBl productBl){
+        this.productBl = productBl;
         this.setName("Solicitud de cotización");
         this.setDefault(false);
         this.setExpires(false);
         this.setStartDate(System.currentTimeMillis()/1000);
-        //this.setUserData(new HashMap<>());
         this.setStatus("STARTED");
 
     }
@@ -66,8 +53,6 @@ public class CotizacionProcessImpl extends AbstractProcess{
                         try {
                             int lot = Integer.parseInt(text);
                             addlotProduct(bot, chatId, lot);
-                            //temporalmente
-                            //showReserveMenu(bot, chatId);
                         }catch (Exception e){
                             System.out.println(e);
                         }
@@ -135,14 +120,13 @@ public class CotizacionProcessImpl extends AbstractProcess{
 
     private void selectedProductmessage(HhRrLongPollingBot bot, Long chatId){
         StringBuffer sb = new StringBuffer();
-        ProductBl productBl = new ProductBl();
-        List<ProductDto> productDtoList = productBl.listproduct();
+        List<ProductDto> productDtoList = productBl.listAllProduct();
 
         sb.append("LISTA DE PRODUCTOS DISPONIBLES\r\n\n");
         for (ProductDto product: productDtoList){
-                sb.append("Id: "+product.getId()+" ");
-                sb.append("Nombre: "+product.getName()+" ");
-                sb.append("Precio: "+product.getPrice()+"\r\n");
+            sb.append("Id: "+product.getId()+" ");
+            sb.append("Nombre: "+product.getName()+" ");
+            sb.append("Precio: "+product.getPrice()+"\r\n");
         }
         sb.append("\nPor favor ingrese el id del producto a cotizar:\r\n");
         state = 1;
@@ -153,12 +137,11 @@ public class CotizacionProcessImpl extends AbstractProcess{
     private void addProduct(HhRrLongPollingBot bot, Long chatId, String text){
         StringBuffer sb = new StringBuffer();
 
-        ProductBl productBl = new ProductBl();
-        List<ProductDto> productDtoList = productBl.listproduct();
+        List<ProductDto> productDtoList = productBl.listAllProduct();
         int Productfind = 0;
         boolean existe = false;
         for (ProductDto product: productDtoList){
-            if(product.getId().equals(text)){
+            if(product.getId()==Integer.parseInt(text)){
                 if(ProductosSolicitados.isEmpty()){
                     sb.append(product.getName()+" añadido a la cotización\r\n");
                     ProductosSolicitados.add(product);
@@ -168,9 +151,9 @@ public class CotizacionProcessImpl extends AbstractProcess{
                     Productfind = 1;
                 }else{
                     for (ProductDto product2: ProductosSolicitados){
-                        if(product2.getId().equals(text))
+                        if(product2.getId()==Integer.parseInt(text))
                         {
-                           existe=true;
+                            existe=true;
                         }
                     }
                     if(existe){
@@ -197,8 +180,9 @@ public class CotizacionProcessImpl extends AbstractProcess{
 
         this.setStatus("AWAITING_USER_RESPONSE");
     }
+
     private void addlotProduct(HhRrLongPollingBot bot, Long chatId, int text){
-        ProductosSolicitados.get(ProductosSolicitados.size()-1).setLot(text+"");
+        ProductosSolicitados.get(ProductosSolicitados.size()-1).setStock(text);
         state = 0;
         StringBuffer sb = new StringBuffer();
         sb.append("Producto añadido a la cotización\r\n");
@@ -206,6 +190,7 @@ public class CotizacionProcessImpl extends AbstractProcess{
         showCotizaciónMenu(bot, chatId);
         this.setStatus("AWAITING_USER_RESPONSE");
     }
+
     private void deleteproductmessage(HhRrLongPollingBot bot, Long chatId){
         StringBuffer sb = new StringBuffer();
         sb.append("Por favor seleccione el producto a eliminar:\r\n\n");
@@ -221,6 +206,7 @@ public class CotizacionProcessImpl extends AbstractProcess{
 
         this.setStatus("AWAITING_USER_RESPONSE");
     }
+
     private void deleteproduct(HhRrLongPollingBot bot, Long chatId, int text){
         ProductosSolicitados.remove(text-1);
         StringBuffer sb = new StringBuffer();
@@ -230,7 +216,6 @@ public class CotizacionProcessImpl extends AbstractProcess{
         showCotizaciónMenu(bot, chatId);
         this.setStatus("AWAITING_USER_RESPONSE");
     }
-
     private void showListProducts(HhRrLongPollingBot bot, Long chatId){
         StringBuffer sb = new StringBuffer();
         sb.append("Cotizacion:\r\n\n");
@@ -239,18 +224,16 @@ public class CotizacionProcessImpl extends AbstractProcess{
         for (ProductDto product: ProductosSolicitados){
 
             sb.append(num+") "+ product.getName()+":"+"\r\n");
-            sb.append("\tPrecio: "+ product.getPrice()+""+"\r\n");
+            sb.append("\tPrecio: "+ product.getPrice()+" Bs"+"\r\n");
             sb.append("\tCantidad: "+ product.getStock()+""+"\r\n\n");
             num++;
             suma= suma+(product.getPrice())*(product.getStock());
         }
-        sb.append("Costo Total de la cotización: "+suma+"\r\n");
+        sb.append("Costo Total de la cotización: "+suma+" Bs"+"\r\n");
         sendStringBuffer(bot, chatId, sb);
         showCotizaciónMenu(bot, chatId);
         this.setStatus("AWAITING_USER_RESPONSE");
     }
-
-
 
     @Override
     public AbstractProcess onError() {
@@ -265,5 +248,5 @@ public class CotizacionProcessImpl extends AbstractProcess{
     @Override
     public AbstractProcess onTimeout() {
         return null;
-    }*/
+    }
 }

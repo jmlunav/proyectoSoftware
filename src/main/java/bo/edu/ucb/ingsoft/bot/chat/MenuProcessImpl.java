@@ -49,7 +49,7 @@ public class MenuProcessImpl extends AbstractProcess {
                         case 1 : result = context.getBean(ReserveProcessImpl.class);
                         //case 1: result = context.getBean(QueryPastRequestsProcessImpl.class);
                         break;
-                        case 2 : result = new CotizacionProcessImpl();
+                        case 2 : result = context.getBean(CotizacionProcessImpl.class);
                         break;
                         case 3 : result = context.getBean(RegisterClientProcessImpl.class);
                             break;
